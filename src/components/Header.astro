@@ -1,0 +1,53 @@
+---
+const menu=[
+  {label:"About",href:"/about"},
+  {label:"Solutions",children:[
+    {label:"Game Development",href:"/solutions/game-development"},
+    {label:"Technology",href:"/solutions/technology"},
+    {label:"Art",href:"/solutions/art"},
+    {label:"Trailers & Cinematics",href:"/solutions/trailers-cinematics"},
+    {label:"QA",href:"/solutions/qa"},
+    {label:"Training & Simulation",href:"/solutions/training-simulation"}
+  ]},
+  {label:"Case Studies",href:"/case-studies"},
+  {label:"Careers ↗",href:"https://www.linkedin.com/company/veinspire-games/jobs/?viewAsMember=true",external:true},
+  {label:"Contact",href:"/contact"}
+];
+---
+<header class="site-header">
+  <div class="container nav">
+    <a class="logo" href="/"><img src="/logo-veinspire.svg" alt="Veinspire" width="140" height="28" /></a>
+    <nav class="primary"><ul>
+      {menu.map(item=>(
+        <li>
+          {item.children ? (
+            <details>
+              <summary>{item.label}</summary>
+              <div class="dropdown">{item.children.map(ch=><a href={ch.href}>{ch.label}</a>)}</div>
+            </details>
+          ) : (
+            <a href={item.href} target={item.external?"_blank":"_self"} rel={item.external?"noopener":undefined}>{item.label}</a>
+          )}
+        </li>
+      ))}
+    </ul></nav>
+    <button class="hamburger" aria-label="Toggle menu" onclick="document.documentElement.classList.toggle('nav-open')">☰</button>
+  </div>
+</header>
+
+<style lang="scss">
+.site-header{position:sticky;top:0;z-index:20;background:#0e0e13cc;backdrop-filter:blur(8px);border-bottom:1px solid #1d1d25}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.primary ul{display:flex;gap:18px;align-items:center;margin:0;padding:0;list-style:none}
+.primary a,summary{color:#e9e9ee;font-weight:500;padding:10px 12px;border-radius:10px}
+.primary a:hover,summary:hover{background:var(--ink-700)}
+details{position:relative} summary{list-style:none;cursor:pointer} summary::-webkit-details-marker{display:none}
+.dropdown{position:absolute;top:100%;left:0;display:grid;gap:6px;min-width:260px;background:#0e0e13;border:1px solid #24242c;border-radius:12px;padding:10px;margin-top:8px}
+.hamburger{display:none}
+@media (max-width:980px){
+  .primary{display:none}.hamburger{display:block;color:#fff;background:var(--ink-700);border-radius:10px;padding:6px 10px}
+  html.nav-open .primary{display:block;position:absolute;left:0;right:0;top:64px;background:#0e0e13;border-bottom:1px solid #24242c}
+  html.nav-open .primary ul{flex-direction:column;align-items:stretch;padding:10px}
+  html.nav-open details .dropdown{position:static;border:none;padding:0;background:transparent}
+}
+</style>

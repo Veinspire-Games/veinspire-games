@@ -1,0 +1,28 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import CaseLayout from "@layouts/CaseLayout.astro";
+
+// 1) Даём Astro список путей для генерации
+export async function getStaticPaths() {
+  const all = await getCollection("cases");
+  return all.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry }, // прокидываем сам entry в страницу
+  }));
+}
+
+// 2) Забираем entry из props
+const { entry } = Astro.props as { entry: CollectionEntry<"cases"> };
+const { title, excerpt, tags, cover } = entry.data;
+const { Content } = await entry.render();
+---
+
+<CaseLayout title={title} excerpt={excerpt} tags={tags} hero={cover}>
+  <section class="section">
+    <div class="container">
+      <article class="card" style="padding:20px">
+        <Content />
+      </article>
+    </div>
+  </section>
+</CaseLayout>

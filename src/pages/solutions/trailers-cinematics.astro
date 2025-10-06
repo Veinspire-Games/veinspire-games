@@ -1,0 +1,24 @@
+---
+import SolutionLayout from "@layouts/SolutionLayout.astro";
+const sections=[
+  {id:"full-dev",label:"Full / Co-Dev"},
+  {id:"prototype",label:"Vertical Slice & Prototypes"},
+  {id:"liveops",label:"LiveOps & DLC"}
+];
+---
+<SolutionLayout title="Game Development" intro="Full-cycle, Co-Dev, Vertical Slice, LiveOps." sections={sections}>
+  <section id="full-dev" class="section"><div class="container">
+    <h2 data-reveal>Full feature / Co-Development</h2>
+    <p data-reveal data-stagger="1" style="color:var(--ink-200)">Фазы: Discovery → Production → Alpha/Beta → Release.</p>
+  </div></section>
+
+  <section id="prototype" class="section"><div class="container">
+    <h2 data-reveal>Vertical Slice & Prototyping</h2>
+    <p data-reveal data-stagger="1" style="color:var(--ink-200)">8–12 недель на vertical slice: цели, KPI, пайплайны.</p>
+  </div></section>
+
+  <section id="liveops" class="section"><div class="container">
+    <h2 data-reveal>LiveOps & DLC</h2>
+    <p data-reveal data-stagger="1" style="color:var(--ink-200)">Контент-пайплайн, аналитика, телеметрия, стабильные релизы.</p>
+  </div></section>
+</SolutionLayout>

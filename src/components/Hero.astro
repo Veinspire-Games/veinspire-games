@@ -1,0 +1,30 @@
+---
+export interface Props{
+  title?:string; subtitle?:string;
+  primaryHref?:string; primaryText?:string;
+  secondaryHref?:string; secondaryText?:string;
+}
+const {
+  title="Co-Dev partner for PC, Console & Mobile",
+  subtitle="Мы ускоряем продакшн, вертикальные слайсы и LiveOps на UE5/Unity — с фокусом на качество, сроки и бюджет.",
+  primaryHref="/contact", primaryText="Start a project",
+  secondaryHref="/case-studies", secondaryText="See case studies"
+}=Astro.props;
+---
+<section class="hero section">
+  <div class="container">
+    <h1 data-reveal data-stagger="1">{title}</h1>
+    <p class="sub" data-reveal data-stagger="2">{subtitle}</p>
+    <div class="cta" data-reveal data-stagger="3">
+      <a class="btn" href={primaryHref}>{primaryText}</a>
+      <a class="btn btn--ghost" href={secondaryHref}>{secondaryText}</a>
+    </div>
+    <div class="underline" data-reveal data-stagger="4"></div>
+  </div>
+</section>
+
+<style lang="scss">
+.hero{padding-top:72px;padding-bottom:48px}
+.hero .sub{max-width:840px;color:var(--ink-200);margin:12px 0 22px}
+.hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+</style>

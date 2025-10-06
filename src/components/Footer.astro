@@ -1,0 +1,27 @@
+---
+const legal=[
+  {label:"Privacy",href:"/privacy"},
+  {label:"Cookies",href:"/cookies"},
+  {label:"Terms",href:"/terms"},
+  {label:"Ethics & Compliance",href:"/ethics-compliance"}
+];
+---
+<footer class="site-footer">
+  <div class="container grid">
+    <div class="brand">
+      <img src="/logo-veinspire.svg" alt="Veinspire" width="140" height="28" />
+      <p class="muted">Co-Development for PC, Console & Mobile. UE5 / Unity.</p>
+    </div>
+    <nav class="links">{legal.map(l=><a href={l.href}>{l.label}</a>)}</nav>
+  </div>
+  <div class="container meta"><small>© {new Date().getFullYear()} Veinspire Games.</small></div>
+</footer>
+
+<style lang="scss">
+.site-footer{border-top:1px solid #1d1d25;padding:36px 0 20px;background:#0e0e13}
+.grid{display:flex;justify-content:space-between;gap:20px;align-items:center}
+.muted{color:var(--ink-200);margin-top:8px}
+.links{display:flex;gap:14px;flex-wrap:wrap}.links a{color:var(--ink-200)}.links a:hover{color:#fff}
+.meta{margin-top:16px;color:var(--ink-400)}
+@media (max-width:840px){.grid{flex-direction:column;align-items:flex-start}}
+</style>

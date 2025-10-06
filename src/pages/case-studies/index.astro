@@ -1,0 +1,17 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import CaseCard from "@components/CaseCard.astro";
+
+const all = await getCollection("cases");
+---
+<BaseLayout title="Case Studies — Veinspire">
+  <section class="section"><div class="container">
+    <h1 data-reveal>Case Studies</h1>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:16px">
+      {all.map(c=>(
+        <CaseCard href={`/case-studies/${c.slug}`} title={c.data.title} excerpt={c.data.excerpt} tags={c.data.tags} cover={c.data.cover} />
+      ))}
+    </div>
+  </div></section>
+</BaseLayout>
