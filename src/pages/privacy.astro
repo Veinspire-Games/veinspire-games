@@ -1,9 +1,167 @@
 ---
 import Layout from "../layouts/MainLayout.astro";
+import styles from "../styles/privacy.module.scss";
+
+// Поменяй на реальный адрес при необходимости
+const CONTACT_EMAIL = "veinspiregames@gmail.com";
+const COMPANY_NAME = "Veinspire Games";
 ---
-<Layout title="Privacy Policy — Studio Placeholder">
-  <section style="padding: 4rem 0;">
-    <h1 class="fade-in">Privacy Policy</h1>
-    <p class="fade-in" style="animation-delay: .12s;">Privacy policy text coming soon.</p>
+
+<Layout title="Privacy Policy — Veinspire Games" description="Veinspire Games Privacy Policy">
+  <section class={styles.page}>
+    <div class={styles.container}>
+      <h1>Personal Data Protection Policy</h1>
+
+      <p>
+        {COMPANY_NAME} (hereinafter, “the Company”) is strongly committed to protecting your personal information.
+        We consider proper management of personal data to be one of the core principles of our business and comply
+        with all applicable laws in the territories in which we operate.
+      </p>
+
+      <p>
+        Acting as a <strong>Data Controller</strong> with respect to the personal data collected from our website
+        visitors and data subjects who directly send us their CVs, the Company will comply with laws and regulations
+        pertaining to personal data protection, and shall put in place its own rules and systems. All employees of the
+        Company shall abide by this Policy and will make the strongest effort to protect personal data.
+      </p>
+
+      <p>
+        You can contact our Privacy Office at
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> for more information or concerns.
+      </p>
+
+      <h2>Definitions</h2>
+      <p>
+        <strong>“Personal data”</strong> — any information relating to an identified or identifiable natural person
+        (“data subject”), such as a name, an identification number, location data, an online identifier or one or more
+        factors specific to the identity of that person (GDPR Art. 4(1)).
+      </p>
+      <p>
+        <strong>“Biometric data”</strong> — personal data resulting from specific technical processing relating to
+        physical, physiological or behavioural characteristics of a natural person which allow or confirm unique
+        identification (e.g., facial images or fingerprint data).
+      </p>
+      <p>
+        <strong>“Consent”</strong> — any freely given, specific, informed and unambiguous indication of the data
+        subject’s wishes by which they signify agreement to the processing of personal data relating to them.
+      </p>
+      <p>
+        <strong>“Data controller”</strong> — the person or organization which determines the purposes and means of
+        processing personal data. <strong>“Data processor”</strong> — processes personal data on behalf of the controller.
+      </p>
+      <p>
+        <strong>“Processing”</strong> — any operation performed on personal data (collection, storage, use, disclosure,
+        erasure, etc.). <strong>“Profiling”</strong> — automated processing used to evaluate certain personal aspects.
+      </p>
+      <p>
+        <strong>“Supervisory Authority”</strong> — an independent public authority established by a Member State.
+        <strong>“Third party”</strong> — any entity other than the data subject and the controller/processor acting under
+        our direct authority.
+      </p>
+      <p>
+        <strong>“GDPR”</strong> — EU General Data Protection Regulation (EU) 2016/679.
+        <strong>“Data protection laws”</strong> — GDPR and other applicable data protection legislation.
+      </p>
+
+      <h2>Handling of Personal Data</h2>
+      <p>
+        The Company will obtain personal data via appropriate methods and use it only within the scope of the purposes
+        specified at the time of collection, unless otherwise permitted by law. We will not use personal data beyond the
+        necessary scope to attain those purposes, and we shall not provide personal data to third parties without prior
+        consent, unless permitted by law.
+      </p>
+
+      <h3>Legal Basis</h3>
+      <p>
+        Under GDPR Art. 6(1)(f), processing is lawful where it is necessary for the purposes of the legitimate
+        interests pursued by the controller, except where such interests are overridden by the interests or fundamental
+        rights and freedoms of the data subject. The legal basis for processing your personal data is our legitimate
+        interest to operate our business for the benefit of our clients, job seekers, service providers, employees and
+        shareholders.
+      </p>
+
+      <h3>Categories of Data &amp; Purpose</h3>
+      <p>
+        By using this site and disclosing your data to {COMPANY_NAME} (sending information via the “Contact” page,
+        applying to jobs, or sending your CV/Resume), you consent to the collection, storage, processing, use and
+        disclosure of your data as described in this Policy. This may include your name, address, email address, phone
+        number(s), educational background, photo, work experience and information from your CV/application. We do not
+        collect biometric or special category data.
+      </p>
+      <p>
+        Data received from you will be used for recruitment and communication purposes only and will not be further
+        processed in a manner incompatible with these purposes. Personal information submitted via the website may be
+        shared across our studios globally solely for recruitment purposes.
+      </p>
+      <p>
+        The Company will retain your application and personal data only as long as required by applicable law or our
+        legitimate interests, and may retain it where necessary to comply with legal obligations or protect vital
+        interests.
+      </p>
+
+      <h2>Respect for Individual Rights and Freedoms</h2>
+      <p>
+        We provide information referred to in GDPR Articles 13/14 and any communication under Articles 15–22 and 34 in
+        a concise, transparent, intelligible and easily accessible form, using clear and plain language.
+      </p>
+
+      <h3>Your Rights</h3>
+      <ul>
+        <li>Right of access;</li>
+        <li>Right to rectification;</li>
+        <li>Right to erasure;</li>
+        <li>Right to restrict processing;</li>
+        <li>Right to object to processing;</li>
+        <li>Right to data portability;</li>
+        <li>Right to complain to a supervisory authority; and</li>
+        <li>Right to withdraw consent.</li>
+      </ul>
+      <p>
+        For questions or to exercise your rights, contact our Privacy Office:
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+      </p>
+
+      <h2>Personal Data Protection System</h2>
+      <p>
+        The Company assigns managers to oversee protection and management of personal data. Roles and responsibilities
+        are clearly defined, and employees receive guidance on proper handling procedures.
+      </p>
+
+      <h2>Protection of Personal Data</h2>
+      <p>
+        We implement appropriate technical and organizational measures to ensure security of personal data and to
+        prevent unauthorized access, loss or damage. If data processing is outsourced, we put in place contracts
+        requiring appropriate safeguards and supervise processors accordingly.
+      </p>
+
+      <h2>Continuous Improvement</h2>
+      <p>
+        We continually review and improve this Policy in line with changes to our business, legal, social or IT
+        environment.
+      </p>
+
+      <h2>Legal Compliance</h2>
+      <p>
+        The Company complies with all applicable laws, governmental guidelines and other regulations governing the
+        protection of personal data.
+      </p>
+
+      <h2>Revisions</h2>
+      <p>
+        We may revise this Policy as required by applicable laws and regulations or to better protect personal
+        information. Unless otherwise noted, revisions take effect upon posting on our website.
+      </p>
+
+      <h2>Inquiries</h2>
+      <p>
+        We accept and respond to inquiries regarding this Policy or data processed by the Company in a timely manner.
+        Contact: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+      </p>
+
+      <hr class={styles.rule} />
+      <p class={styles.small}>
+        Last updated: {new Date().toLocaleDateString()}
+      </p>
+    </div>
   </section>
 </Layout>

@@ -1,0 +1,72 @@
+/* Бежевый фон для контентной секции. Ничего глобально не переопределяем. */
+.page {
+  /* фирменная палитра Veinspire */
+  --vs-brand-400: #B72828;
+  --vs-brand-500: #8B1E1E;
+  --vs-brand-600: #7A1919;
+  --vs-brand-700: #5E1111;
+
+  --vs-ink-900:  #0B0B0B; /* чёрный текст */
+  --vs-ink-700:  #5a5a5a;
+
+  --vs-paper-beige: #F6EFE5; /* мягкий бежевый фон */
+
+  background: var(--vs-paper-beige);
+  color: var(--vs-ink-900);
+  padding: clamp(28px, 6vw, 72px) 0;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 32px);
+}
+
+h1 {
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 24px;
+}
+
+h2 {
+  font-size: clamp(22px, 2.6vw, 28px);
+  font-weight: 700;
+  margin: 28px 0 12px;
+}
+
+h3 {
+  font-size: clamp(18px, 2.2vw, 22px);
+  font-weight: 700;
+  margin: 22px 0 8px;
+}
+
+p {
+  margin: 0 0 14px;
+  line-height: 1.65;
+}
+
+ul {
+  margin: 0 0 16px 1.2rem;
+  line-height: 1.65;
+}
+
+a {
+  color: var(--vs-brand-500);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+
+  &:hover { color: var(--vs-brand-400); }
+  &:active { color: var(--vs-brand-700); }
+}
+
+.rule {
+  border: 0;
+  border-top: 1px solid rgba(0,0,0,.12);
+  margin: 24px 0 8px;
+}
+
+.small {
+  font-size: 12px;
+  color: var(--vs-ink-700);
+}
