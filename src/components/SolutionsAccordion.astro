@@ -1,0 +1,166 @@
+---
+import s from "../styles/SolutionsAccordion.module.scss";
+
+type Point = string | { title: string; items?: string[] };
+type Item  = { title: string; desc: string; points: Point[] };
+
+const items: Item[] = [
+  {
+    title: "Game Development",
+    desc: "We deliver end-to-end production for high-quality titles on any platform, partnering with leading publishers and studios to ship their vision.",
+    points: ["Full Game Development", "Co-Development", "Analytics & LiveOps"],
+  },
+  {
+    title: "Technology",
+    desc: "Backed by deep engineering expertise, we design and build game architectures that run flawlessly on every platform.",
+    points: ["Tech Co-dev", "Optimization", "Gameplay Programming", "Multiplayer Programming", "Tools Development", "UI/UX Development", "Porting", "Remastering", "Devops", "Store submission"],
+  },
+  {
+    title: "Game Design",
+    desc: "We craft systems, levels, economy, and narrative—from vision and core loop through prototyping, playtests, and monetization balancing.",
+    points: ["Vision, pillars, GDD & Feature Vision", "Core loop & progression design", "Systems/economy/monetization", "Combat/AI & encounter design", "Level design, blockouts, greyboxing", "Narrative & quest design (Articy/Twine)", "Telemetry, balancing & A/B tests", "Prototyping & playtests"],
+  },
+  {
+    title: "Art",
+    desc: "Our artists power world-class franchises across the full visual range—from bold stylization to photo-real fidelity.",
+    points: [
+      "End-to-end Art production",
+      { title: "Solutions:", items: [
+        "IP development", "Art Direction", "Characters", "Environment & Level Art",
+        "Vehicles", "Weapons", "UI/UX Design", "Animation & VFX"
+      ]},
+    ],
+  },
+  {
+    title: "Trailers & Cinematics",
+    desc: "We produce top-tier gameplay and CG trailers, in-game cinematics, and UA/marketing videos using both UE5 real-time and pre-rendered pipelines.",
+    points: ["Pre-Production Trailers", "Cinematic Production","Gameplay Trailers", "In-game Cutscenes"],
+  },
+  {
+    title: "VO & Localization",
+    desc: "End-to-end voice-over and localization—from casting and script adaptation to recording, editing, engine integration, and LQA across dozens of languages.",
+    points: ["Casting & VO direction", "Script adaptation & localization", "VO recording", "Data editing and cleanup", "Lip-sync & timing", "Engine integration", "Subtitles & closed captions", "Localization QA"],
+  },
+  {
+    title: "Audio",
+    desc: "End-to-end audio production: original music, sound design, implementation, and technical audio optimized for all platforms.",
+    points: ["Music composition & adaptive scoring", "Sound design (SFX, UI, ambience, foley)", "Dialogue editing & mastering", "In-engine implementation"],
+  },
+  {
+    title: "QA & Testing",
+    desc: "Our QA team runs rigorous, structured testing so defects don`t slip through, using automation to keep delivery on time, on budget, and at quality.",
+    points: ["Manual QA", "QA Automation", "Technical QA", "Functional QA", "UX QA"],
+  },
+
+];
+
+const tighten = (s: string) =>
+  s
+    .replace(/\s&\s/g, '\u00A0&\u00A0')
+    .replace(/\bArt Direction\b/g, 'Art\u00A0Direction')
+    .replace(/\bLevel Art\b/g, 'Level\u00A0Art')
+    .replace(/\bUI\/UX Design\b/g, 'UI/UX\u00A0Design')
+    .replace(/\b(2D|3D|AI|AR|VR|QA|UI|UX|IP)\s(?=[A-Za-z])/g, '$1\u00A0');
+---
+
+<section class={s.wrap} data-acc="solutions">
+  <div class={s.inner}>
+    <h2 class={s.h}>Our solutions</h2>
+
+    <div class={s.list} role="list">
+      {items.map((it, i) => (
+        <details class={s.item} data-role="item" data-i={i} role="listitem">
+          <summary class={s.head} data-role="head" role="button" aria-expanded="false">
+            <div class={s.headGrid}>
+              <div class={s.title}>{it.title}</div>
+              <div class={s.desc}>{it.desc}</div>
+            </div>
+            <div class={s.pm} aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+                <path class={s.pmV} d="M12 5v14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M5 12h14"      fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+          </summary>
+
+          <div class={s.panel} data-role="panel" inert>
+            <div class={s.in}>
+              <ul class={s.pts}>
+                {it.points.map((p) => (
+                  typeof p === "string" ? (
+                    <li class={s.lvl1}>
+                      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class={s.bullet}>
+                        <rect x="7" y="7" width="10" height="10" rx="1.6"
+                              transform="rotate(45 12 12)" fill="none" stroke="currentColor" stroke-width="2"/>
+                      </svg>
+                      <span>{tighten(p)}</span>
+                    </li>
+                  ) : (
+                    <li class={`${s.lvl1} ${s.hasSub}`}>
+                      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" class={s.bullet}>
+                        <rect x="7" y="7" width="10" height="10" rx="1.6"
+                              transform="rotate(45 12 12)" fill="none" stroke="currentColor" stroke-width="2"/>
+                      </svg>
+                      <span class={s.groupTitle}>{p.title}</span>
+                      {p.items?.length ? (
+                        <ul class={s.sub}>
+                          {p.items.map((sItem) => (
+                            <li>
+                              <svg viewBox="0 0 24 24" width="10" height="10" aria-hidden="true" class={s.dot}>
+                                <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                              </svg>
+                              <span>{tighten(sItem)}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : null}
+                    </li>
+                  )
+                ))}
+              </ul>
+
+            </div>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+
+  <script is:inline>
+    (() => {
+      const root = document.querySelector('[data-acc="solutions"]');
+      if (!root) return;
+
+      const items = root.querySelectorAll('[data-role="item"]');
+
+      items.forEach((d) => {
+        const summary = d.querySelector('[data-role="head"]');
+        const panel   = d.querySelector('[data-role="panel"]');
+
+        const setAria = () => {
+          const open = d.hasAttribute('open');
+          summary?.setAttribute('aria-expanded', String(open));
+          if (!panel) return;
+          if (open) {
+            panel.removeAttribute('inert');
+            panel.style.maxHeight = panel.scrollHeight + 'px';
+          } else {
+            panel.setAttribute('inert', '');
+            panel.style.maxHeight = '0px';
+          }
+        };
+
+        setAria();
+        summary?.addEventListener('click', () => requestAnimationFrame(setAria));
+        d.addEventListener('toggle', setAria);
+
+        const onResize = () => {
+          if (d.hasAttribute('open') && panel) {
+            panel.style.maxHeight = panel.scrollHeight + 'px';
+          }
+        };
+        window.addEventListener('resize', onResize, { passive: true });
+      });
+    })();
+  </script>
+</section>

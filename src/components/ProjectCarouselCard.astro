@@ -1,0 +1,23 @@
+---
+import s from "../styles/project-card.module.scss";
+import type { Project } from "../projects/projectData.ts";
+
+type Props = Project;
+
+const { id, title, short, image } = Astro.props as Props;
+---
+
+<!-- ===== CAROUSEL ===== -->
+<article
+  class={s.cardCarousel}
+  role="listitem"
+  aria-roledescription="slide"
+  data-id={id}
+>
+  <img src={image} alt="" class={s.img} loading="lazy" decoding="async" />
+  <div class={s.overlay} aria-hidden="true" />
+  <div class={s.caption}>
+    <h3 class={s.title}>{title}</h3>
+    <p class={s.short}>{short}</p>
+  </div>
+</article>

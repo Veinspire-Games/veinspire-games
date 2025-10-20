@@ -1,0 +1,188 @@
+/* ===== Tokens (можешь слить с общими) ===== */
+:root{
+  --bg: #0e0e0e;
+  --ink: #111;
+  --ink-0: #fff;
+  --ink-2: #d9d9d9;
+  --accent: #7a3aed; /* фиолетовый акцент как в одном из рефов */
+  --radius: 0px;     /* прямые углы */
+  --pad-x: 20px;
+  --pad-x-desktop: 80px;
+
+  --hero-pt: 80px;
+  --hero-pb: 96px;
+
+  --section-pt: 96px;
+  --section-pb: 96px;
+
+  --grid-gap: 28px;
+}
+
+.container{
+  width: min(1280px, 100% - 2*var(--pad-x));
+  margin: 0 auto;
+}
+
+@media (min-width: 1024px){
+  .container{ width: min(1400px, 100% - 2*var(--pad-x-desktop)); }
+}
+
+/* ===== 1. HERO ===== */
+.hero{
+  background: #111;
+  color: var(--ink-0);
+  padding: var(--hero-pt) 0 var(--hero-pb);
+}
+.h1{
+  font-size: clamp(40px, 7vw, 84px);
+  line-height: .95;
+  letter-spacing: .01em;
+  font-weight: 900;
+  margin: 0 0 20px;
+}
+.heroLead{
+  color: var(--ink-2);
+  max-width: 680px;
+  font-size: 18px;
+}
+.heroCtas{
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.btn{
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 12px 18px;
+  border-radius: var(--radius);
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-decoration: none;
+  border: 1px solid currentColor;
+  transition: .2s ease;
+}
+.btnPrimary{
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.btnPrimary:hover{ filter: brightness(.95); }
+.btnOutline{
+  background: transparent;
+  color: #fff;
+}
+.btnOutline:hover{ background: rgba(255,255,255,.08); }
+
+/* ===== 2. ABOUT ===== */
+.about{
+  background: #0f0f0f; color: #fff;
+  padding: var(--section-pt) 0 calc(var(--section-pb) - 24px);
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+.kicker{
+  font-size: clamp(24px, 3.5vw, 40px);
+  line-height: 1.1; margin: 0;
+}
+.aboutTop{
+  display: grid; gap: 24px; align-items: start;
+  grid-template-columns: 1fr;
+  margin-bottom: 36px;
+}
+.aboutText{ color: var(--ink-2); max-width: 680px; }
+@media (min-width: 960px){
+  .aboutTop{ grid-template-columns: .9fr 1.1fr; gap: 40px; }
+}
+.pageTitle{
+  font-size: clamp(52px, 7vw, 100px);
+  margin: 14px 0 26px;
+  letter-spacing: .02em;
+}
+.aboutGrid{
+  display: grid; gap: var(--grid-gap);
+  grid-template-columns: 1fr;
+  border-top: 1px solid rgba(255,255,255,.14);
+}
+@media (min-width: 960px){
+  .aboutGrid{ grid-template-columns: repeat(3, 1fr); }
+}
+.card{
+  padding: 28px 8px 16px 0;
+  border-bottom: 1px solid rgba(255,255,255,.14);
+}
+.cardDot{
+  width: 16px; height: 16px; background:#8f8f8f; margin: 0 0 12px; display:inline-block;
+}
+.cardTitle{ font-size: clamp(22px, 2.8vw, 34px); margin: 0 0 10px; }
+
+/* ===== 3. VALUES ===== */
+.values{
+  background: #0f0f0f; color: #fff;
+  padding: calc(var(--section-pt) - 24px) 0 var(--section-pb);
+}
+.valuesGrid{
+  display: grid; grid-template-columns: 1fr; gap: 22px;
+}
+@media (min-width: 1024px){
+  .valuesGrid{
+    grid-template-columns: repeat(3,1fr);
+    gap: 0; /* линии разделителей */
+    border-top: 1px solid rgba(255,255,255,.12);
+    border-bottom: 1px solid rgba(255,255,255,.12);
+  }
+  .valueItem{
+    padding: 28px 24px 32px;
+    border-right: 1px solid rgba(255,255,255,.12);
+  }
+  .valueItem:nth-child(3n){ border-right: none; }
+}
+.valueItem h4{ margin: 0 0 6px; font-size: 18px; letter-spacing: .06em; text-transform: uppercase; }
+.valueItem p { color: #cfcfcf; }
+
+/* ===== 4. STATS ===== */
+.stats{ background: #0e0e0e; color:#fff; padding: var(--section-pt) 0 var(--section-pb); }
+.statsGrid{
+  display: grid; grid-template-columns: repeat(2,1fr); gap: 18px;
+}
+@media (min-width: 960px){ .statsGrid{ grid-template-columns: repeat(4,1fr); } }
+.stat{ padding: 18px 0; }
+.num{
+  font-size: clamp(36px, 6vw, 64px); font-weight: 900; letter-spacing: .02em;
+}
+.caption{ color: #bdbdbd; margin-top: 6px; }
+
+/* ===== 5. OUR WORK ===== */
+.work{ background:#0f0f0f; color:#fff; padding: var(--section-pt) 0 var(--section-pb); }
+.workHead{ display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom: 16px; }
+.workHead h2{ font-size: clamp(28px,3.2vw,40px); margin:0; }
+.scroller{
+  display: grid; grid-auto-flow: column; grid-auto-columns: 80%;
+  gap: 16px; overflow-x:auto; padding-bottom: 8px; scroll-snap-type:x mandatory;
+}
+@media (min-width: 1024px){ .scroller{ grid-auto-columns: 32%; } }
+.workCard{
+  position: relative; height: 380px; border-radius: var(--radius);
+  background: #222 center/cover no-repeat; background-image: var(--bg);
+  display: grid; align-content: end; padding: 20px; gap: 10px; scroll-snap-align: start;
+  box-shadow: 0 10px 40px rgba(0,0,0,.25) inset;
+  text-decoration: none; color:#fff;
+}
+.workTitle{ font-size: clamp(22px,3vw,28px); font-weight: 800; letter-spacing:.08em; }
+.workBtn{
+  display:inline-block; padding: 10px 14px; border:1px solid rgba(255,255,255,.9); border-radius: var(--radius);
+  font-weight: 800; letter-spacing:.06em;
+  backdrop-filter: blur(2px);
+}
+
+/* ===== 6. LET'S TALK ===== */
+.talk{ background:#0e0e0e; color:#fff; padding: var(--section-pt) 0 72px; }
+.talk .container{ display:grid; grid-template-columns: 1fr; align-items: center; }
+@media (min-width:1024px){ .talk .container{ grid-template-columns: 1fr auto; } }
+.talkBig{
+  display:block; text-decoration:none; color:#fff;
+  font-size: clamp(54px, 11vw, 160px); font-weight: 900; letter-spacing: .02em;
+  line-height: .95;
+}
+.talkAside{
+  margin-top: 16px; color:#dcdcdc; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  text-transform: uppercase; font-size: 14px; letter-spacing:.14em;
+}

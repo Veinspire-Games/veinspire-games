@@ -1,0 +1,51 @@
+---
+import s from "../styles/about.module.scss";
+---
+
+
+<section id="about" class={s.wrap} data-state="init" aria-label="About">
+  <div class="container">
+    <p class={s.display}>
+      Veinspire Games <span class={s.hi} style="--d:.05s">is a full-range</span> game 
+      <span class={s.hi} style="--d:.10s">developer</span> 
+      <span class={s.hi} style="--d:.15s">with over 10 years</span> of experience and 15+ games in our portfolio. 
+      We specialize in <span class={s.hi} style="--d:.20s">co-development</span> and other 
+      <span class={s.hi} style="--d:.25s">development services</span> to some of the world's top gaming studios and publishers while also creating our <span class={s.hi} style="--d:.30s">own IP</span>.
+    </p>
+  </div>
+
+  <div class={s.divider} aria-hidden="true"></div>
+
+  <script is:inline>
+    // Анимация запускается ОДИН раз после перезагрузки страницы,
+    // при первом появлении секции в вьюпорте.
+    (function () {
+      const section = document.getElementById('about');
+      if (!section) return;
+
+      // Если в этой сессии уже проигрывали — сразу показываем окрашенную версию.
+      if (sessionStorage.getItem('about-colored') === '1') {
+        section.dataset.state = 'colored';
+        return;
+      }
+
+      const io = new IntersectionObserver((entries) => {
+        const e = entries[0];
+        if (!e.isIntersecting) return;
+
+        // Сначала плавное появление всего текста…
+        section.dataset.state = 'shown';
+
+        // …а затем — перекрашивание выделенных фрагментов (стаггером).
+        setTimeout(() => {
+          section.dataset.state = 'colored';
+          sessionStorage.setItem('about-colored', '1');
+        }, 450);
+
+        io.disconnect();
+      }, { threshold: 0.45 });
+
+      io.observe(section);
+    })();
+  </script>
+</section>

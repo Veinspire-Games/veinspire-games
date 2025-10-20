@@ -1,0 +1,24 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import ProjectsGrid from "../components/ProjectsGrid.astro";
+
+// Карточки (визуал) + их данные (named export `project`)
+import VisageCard, { project as project1 } from "../projects/cards/project1.astro";
+import Mafia2Card, { project as project2 } from "../projects/cards/project2.astro";
+import MafiaCard,  { project as project3 }  from "../projects/cards/project3.astro";
+import CandyCard,  { project as project4 }  from "../projects/cards/project4.astro";
+import CandyCard2,  { project as project5 }  from "../projects/cards/project5.astro";
+
+// Управляем составом грида здесь одной строкой:
+const items = [
+  { Comp: project1, data: project1 },
+  { Comp: project2, data: project2 },
+  { Comp: project3,  data: project3 },
+  { Comp: project4,  data: project4 },
+  { Comp: project5,  data: project5 },
+];
+---
+
+<MainLayout title="Projects">
+  <ProjectsGrid items={items} title="Our projects" />
+</MainLayout>

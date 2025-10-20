@@ -1,21 +1,8 @@
 ---
-import BaseLayout from "@layouts/BaseLayout.astro";
+import Layout from "../layouts/MainLayout.astro";
+import ContactsModal from "../components/Contacts.astro";
 ---
-<BaseLayout title="Contact — Veinspire Games">
-  <section class="section"><div class="container">
-    <h1 data-reveal>Start a project</h1>
-    <form class="card" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" style="padding:20px;max-width:760px" data-reveal>
-      <div style="display:grid;gap:12px;grid-template-columns:1fr 1fr">
-        <input name="name" placeholder="Your name" required />
-        <input type="email" name="email" placeholder="Email" required />
-      </div>
-      <input name="company" placeholder="Company (optional)" style="margin-top:12px" />
-      <textarea name="message" placeholder="Tell us about your project" rows="6" style="margin-top:12px"></textarea>
-      <label style="display:flex;gap:8px;align-items:center;margin-top:12px;color:var(--ink-200)">
-        <input type="checkbox" name="consent" required /> I agree to the processing of personal data.
-      </label>
-      <button class="btn" type="submit" style="margin-top:14px">Send</button>
-      <input type="text" name="_honeypot" style="display:none" tabindex="-1" autocomplete="off" />
-    </form>
-  </div></section>
-</BaseLayout>
+
+<Layout title="Contact — Veinspire Games">
+  <ContactsModal />
+</Layout>

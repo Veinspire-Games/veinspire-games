@@ -1,30 +1,41 @@
 ---
-export interface Props{
-  title?:string; subtitle?:string;
-  primaryHref?:string; primaryText?:string;
-  secondaryHref?:string; secondaryText?:string;
-}
-const {
-  title="Co-Dev partner for PC, Console & Mobile",
-  subtitle="Мы ускоряем продакшн, вертикальные слайсы и LiveOps на UE5/Unity — с фокусом на качество, сроки и бюджет.",
-  primaryHref="/contact", primaryText="Start a project",
-  secondaryHref="/case-studies", secondaryText="See case studies"
-}=Astro.props;
+/**
+ * HERO секция "как у рефа":
+ * - полноэкранный фон (cover) + мягкий затемняющий градиент
+ * - центрированный блок: H1 (3 строки), абзац, кнопка "Learn More" с круглой иконкой
+ * - плавный скролл к следующему блоку (href="#about")
+ *
+ * Как сменить фон:
+ *   в hero.module.scss у .hero задаётся переменная --hero-bg: url('/images/hero.jpg')
+ *   либо пробросить прямо на секции: <section class={s.hero} style="--hero-bg:url('/path.jpg')">
+ */
+import s from "../styles/hero.module.scss";
 ---
-<section class="hero section">
-  <div class="container">
-    <h1 data-reveal data-stagger="1">{title}</h1>
-    <p class="sub" data-reveal data-stagger="2">{subtitle}</p>
-    <div class="cta" data-reveal data-stagger="3">
-      <a class="btn" href={primaryHref}>{primaryText}</a>
-      <a class="btn btn--ghost" href={secondaryHref}>{secondaryText}</a>
-    </div>
-    <div class="underline" data-reveal data-stagger="4"></div>
+
+<section id="hero" class={s.hero} aria-label="Hero">
+  <div class={s.overlay} aria-hidden="true"></div>
+
+  <div class={`container ${s.center}`}>
+    <h1 class={s.title}>
+      GAMES.<br/>
+      TECHNOLOGY.<br/>
+      PEOPLE.
+    </h1>
+
+    <p class={s.lead}>
+      At Veinspire, we know that an exceptional team,<br/>
+      supported by cutting-edge technology,<br/>
+      is at the heart of every successful project.
+    </p>
+
+    <a href="#about" class={s.learn} aria-label="Learn more">
+      <span class={s.pill} aria-hidden="true">
+        <!-- стрелка вниз -->
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span class={s.learnText}>Learn More</span>
+    </a>
   </div>
 </section>
-
-<style lang="scss">
-.hero{padding-top:72px;padding-bottom:48px}
-.hero .sub{max-width:840px;color:var(--ink-200);margin:12px 0 22px}
-.hero .cta{display:flex;gap:12px;flex-wrap:wrap}
-</style>

@@ -1,0 +1,158 @@
+---
+import styles from "../styles/contact.module.scss";
+const FORM_ACTION = "https://formspree.io/f/xldnqarq";
+---
+
+<section id="contact" class={styles.wrap}>
+  <div class={styles.inner}>
+    <h1 class={styles.title}>Contact</h1>
+
+    <form id="contact-form" class={styles.form} action={FORM_ACTION} method="POST" novalidate>
+      <!-- Honeypot -->
+      <input type="text" name="_gotcha" class={styles.gotcha} tabindex="-1" autocomplete="off" />
+
+      <div class={styles.row}>
+        <label class={styles.label} for="name">Name</label>
+        <input class={styles.input} id="name" name="name" type="text" required />
+      </div>
+
+      <div class={styles.row}>
+        <label class={styles.label} for="company">Company</label>
+        <input class={styles.input} id="company" name="company" type="text" required />
+      </div>
+
+      <div class={styles.row}>
+        <label class={styles.label} for="email">Email</label>
+        <input class={styles.input} id="email" name="email" type="email" inputmode="email" autocomplete="email" required />
+      </div>
+
+      <div class={styles.row}>
+        <label class={styles.label} for="message">Message</label>
+        <textarea class={styles.textarea} id="message" name="message" rows="6" required></textarea>
+      </div>
+
+      <!-- reCAPTCHA: скрыта до валидности формы -->
+      <div id="captchaWrap" class={styles.captchaWrap} hidden>
+        <div id="g-recaptcha" class="g-recaptcha" data-sitekey="6LeKs38rAAAAAOV5MhKAcyoSR8x5Bixd6JfeN53I"></div>
+      </div>
+
+      <button id="submitBtn" class={styles.submit} type="submit" disabled>Submit</button>
+
+      <div class={styles.checks}>
+        <label class={styles.checkLine}>
+          <input id="consent1" type="checkbox" class={styles.checkbox} />
+          <span>
+            By ticking this box, I consent to processing my personal data in accordance with
+            Veinspire’s <a href="/privacy" target="_blank" rel="noopener">Privacy&nbsp;Policy</a>.
+          </span>
+        </label>
+
+        <label class={styles.checkLine}>
+          <input id="consent2" type="checkbox" class={styles.checkbox} />
+          <span>
+            I consent to receiving marketing communications from Veinspire Games. I can unsubscribe at any moment.
+          </span>
+        </label>
+      </div>
+
+      <div id="form-status" class={styles.status} role="status" aria-live="polite"></div>
+    </form>
+  </div>
+</section>
+
+<!-- reCAPTCHA -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<script type="module">
+  const $ = (id) => document.getElementById(id);
+
+  const form = $("contact-form");
+  const submitBtn = $("submitBtn");
+  const statusEl = $("form-status");
+  const captchaWrap = $("captchaWrap");
+
+  const nameEl = $("name");
+  const companyEl = $("company");
+  const emailEl = $("email");
+  const messageEl = $("message");
+
+  const consent1 = $("consent1");
+  const consent2 = $("consent2");
+
+  if (!form || !submitBtn || !statusEl || !captchaWrap || !nameEl || !companyEl || !emailEl || !messageEl) {
+    console.warn("[Contacts] Missing DOM elements. Script skipped.");
+  } else {
+    const emailValid = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test((v || "").trim());
+
+    const fieldsValid = () =>
+      nameEl.value.trim().length > 1 &&
+      companyEl.value.trim().length > 1 &&
+      emailValid(emailEl.value) &&
+      messageEl.value.trim().length > 3;
+
+    const consentsOk = () => !!(consent1 && consent1.checked && consent2 && consent2.checked);
+
+    const updateUI = () => {
+      const ok = fieldsValid() && consentsOk();
+      submitBtn.disabled = !ok;
+      captchaWrap.hidden = !ok;
+    };
+
+    const markInvalids = () => {
+      const pairs = [
+        [nameEl, nameEl.value.trim().length > 1],
+        [companyEl, companyEl.value.trim().length > 1],
+        [emailEl, emailValid(emailEl.value)],
+        [messageEl, messageEl.value.trim().length > 3],
+      ];
+      pairs.forEach(([el, ok]) => el.setAttribute("aria-invalid", ok ? "false" : "true"));
+    };
+
+    [nameEl, companyEl, emailEl, messageEl].forEach((el) => el.addEventListener("input", updateUI));
+    [consent1, consent2].forEach((c) => c && c.addEventListener("change", updateUI));
+    updateUI();
+
+    form.addEventListener("submit", async (e) => {
+      if (submitBtn.disabled) {
+        e.preventDefault();
+        markInvalids();
+        statusEl.textContent = "Please fill all fields correctly and tick both checkboxes.";
+        form.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
+
+      // Сливаем все поля в message — если Formspree читает только email+message
+      const merged =
+        "Name: " + nameEl.value.trim() + "\n" +
+        "Company: " + companyEl.value.trim() + "\n" +
+        "Email: " + emailEl.value.trim() + "\n" +
+        "Message: " + messageEl.value.trim();
+      messageEl.value = merged;
+
+      e.preventDefault();
+      statusEl.textContent = "";
+      submitBtn.disabled = true;
+
+      try {
+        const data = new FormData(form);
+        const res = await fetch(form.action, { method: "POST", body: data, headers: { Accept: "application/json" } });
+
+        if (res.ok) {
+          form.reset();
+          updateUI();
+          statusEl.textContent = "Thanks for your submission!";
+        } else {
+          let out = {};
+          try { out = await res.json(); } catch {}
+          statusEl.textContent = (out && out.errors)
+            ? out.errors.map((x) => x.message).join(", ")
+            : "Oops! There was a problem submitting your form.";
+          submitBtn.disabled = false;
+        }
+      } catch {
+        statusEl.textContent = "Oops! There was a problem submitting your form.";
+        submitBtn.disabled = false;
+      }
+    });
+  }
+</script>

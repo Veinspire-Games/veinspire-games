@@ -1,0 +1,296 @@
+/* ===== Токены (при необходимости можно заменить на твои глобальные) ===== */
+:root {
+  /* brand */
+  --brand-500: #8B1E1E;
+  --brand-600: #7A1919;
+
+  /* neutrals */
+  --ink-900: #111111;
+
+  /* surfaces */
+  --paper-0:  #FFFFFF;
+  --paper-50: #F5F3EE;
+  --paper-900:#0E0E0E;
+
+  /* motion */
+  --dur-xs: 160ms;
+  --dur-s:  240ms;
+  --easing: cubic-bezier(.22,.61,.36,1);
+
+  --header-pad-desktop-left: 64px;
+  --header-pad-desktop-right: 64px;
+
+  --header-height-large: 120px;
+  --header-height-compact: 96px;
+}
+
+/* Блокировка скролла при открытом мобильном меню */
+:global(.lock-scroll) { overflow: hidden; }
+
+/* ===== Header base ===== */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  /* Состояние меняется по data-state: large (прозрачный) -> compact (чёрный) */
+  transition: background var(--dur-s) var(--easing), box-shadow var(--dur-s) var(--easing);
+  background: transparent;
+
+  &[data-state="compact"] {
+  background: var(--ink-900);
+    box-shadow: 0 2px 12px rgba(0,0,0,.25);
+  }
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: var(--header-height-large); /* LIGHT */
+  padding: 0 20px;
+  transition: height var(--dur-s) var(--easing), padding var(--dur-s) var(--easing);
+
+  :global(#site-header[data-state="compact"]) & {
+    height: var(--header-height-compact); /* DARK */
+  }
+
+  @media (min-width: 1024px) {
+    padding-left: var(--header-pad-desktop-left, 56px);
+    padding-right: var(--header-pad-desktop-right, 56px);
+  }
+}
+
+/* ===== Logo ===== */
+.logo, .logoSmall {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--ink-900);
+
+  :global(#site-header[data-state="compact"]) & {
+    color: var(--paper-0);
+  }
+}
+
+/* === Лого-картинки (вместо .logoMark) === */
+.logoImg { width: 110px; height: 110px; display: inline-block; }
+
+/* по умолчанию показываем тёмную версию (для прозрачного/светлого фона) */
+.logoImgDark { display: inline-block; }
+.logoImgLight { display: none; }
+
+/* когда хедер в компактном чёрном состоянии — показываем светлую версию */
+:global(#site-header[data-state="compact"]) {
+  .logoImgDark { display: none; }
+  .logoImgLight { display: inline-block; }
+}
+
+/* мини-лого внутри мобильной модалки */
+.logoImgSmall { width: 24px; height: 24px; display: inline-block; }
+
+.logoMark {
+  display: inline-block;
+  width: 28px; height: 28px;
+  background: var(--ink-900);
+
+  :global(#site-header[data-state="compact"]) & {
+    background: var(--paper-0);
+  }
+}
+
+.logoText {
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  font-size: 14px;
+}
+
+/* ===== Desktop nav ===== */
+.desktopNav {
+  display: none;
+
+  @media (min-width: 1024px) {
+    display: inline-flex;
+    gap: 12px;
+    align-items: center;
+  }
+}
+
+.navLink {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 16px;
+  text-decoration: none;
+  font-weight: 700;
+  border: 1px solid transparent;
+  transition: background var(--dur-s) var(--easing),
+              color var(--dur-s) var(--easing),
+              border-color var(--dur-s) var(--easing);
+  border-radius: 0; /* прямые углы */
+  color: var(--ink-900);
+
+  :global(#site-header[data-state="compact"]) & {
+    color: var(--paper-0);
+  }
+
+  :global(#site-header[data-state="large"]) & {
+    color: var(--paper-0);
+  }
+}
+
+.outline {
+  border-color: currentColor;
+  background: transparent;
+
+  &:hover { background: var(--paper-50); }
+
+  :global(#site-header[data-state="compact"]) & {
+    border-color: var(--paper-0);
+
+    &:hover { background: rgba(255,255,255,.08); }
+  }
+  
+}
+
+:global(#site-header[data-state="large"]) .outline:hover {
+  color: var(--ink-900);        /* чёрный текст */
+  border-color: var(--ink-900); /* и рамка в тот же тон */
+  background: var(--paper-50);  /* оставляем текущую заливку */
+}
+
+.primary {
+  background: var(--brand-500);
+  color: var(--paper-0);
+  border-color: var(--brand-500);
+
+  &:hover { background: var(--brand-600); border-color: var(--brand-600); }
+}
+
+/* ===== Mobile MENU trigger ===== */
+.menuBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px; padding: 0 14px;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: var(--ink-900);
+  font-weight: 800;
+  letter-spacing: .08em;
+  cursor: pointer;
+  border-radius: 0; /* без скруглений */
+  transition: color var(--dur-s) var(--easing), border-color var(--dur-s) var(--easing);
+
+  :global(#site-header[data-state="compact"]) & {
+    color: var(--paper-0);
+    border-color: var(--paper-0);
+  }
+
+  /* В светлом состоянии — белая */
+  :global(#site-header[data-state="large"]) & {
+    color: var(--paper-0);
+    border-color: var(--paper-0);
+  }
+
+  @media (min-width: 1024px) {
+    display: none; /* на десктопе кнопка скрыта, остаётся старая десктоп-навигация */
+  }
+}
+
+:global(#site-header[data-state="large"]) .menuBtn:hover {
+  color: var(--ink-900);
+  border-color: var(--ink-900);
+}
+
+/* ===== Mobile modal menu (НОВАЯ реализация) ===== */
+.mobileMenu[hidden] { display: none; }
+
+.mobileMenu {
+  position: fixed;
+  inset: 0;
+  z-index: 100; /* поверх хедера */
+}
+
+.mobileBackdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  opacity: 0;
+  animation: fadeIn var(--dur-s) var(--easing) forwards;
+}
+
+.mobileCard {
+  position: absolute;
+  /* Центрируем «кард» как на референсе */
+  top: 64px;
+  left: 50%;
+  transform: translateX(-50%) scale(.98);
+  width: min(88vw, 560px);
+  min-height: 60vh;
+  background: #0e0e0e;
+  color: #fff;
+  box-shadow: 0 12px 40px rgba(0,0,0,.35);
+  padding: 24px 24px 28px;
+  animation: cardIn var(--dur-s) var(--easing) forwards;
+
+  @media (min-width: 420px) {
+    top: 72px;
+  }
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logoSmall .logoMark {
+  width: 24px; height: 24px;
+  background: #fff;
+}
+
+/* Кнопка закрытия — круглая (как на скрине), остальная UI — без скруглений */
+.closeBtn {
+  width: 36px; height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: #202020;
+  color: #fff;
+  cursor: pointer;
+  line-height: 1;
+  font-size: 18px;
+  transition: background var(--dur-xs) var(--easing);
+
+  &:hover { background: #2a2a2a; }
+}
+
+.menuList {
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menuItem {
+  display: block;
+  text-decoration: none;
+  color: #fff;
+  font-size: clamp(28px, 6vw, 40px);
+  line-height: 1.3;
+  padding: 10px 4px;
+  border-radius: 0;
+
+  &:hover { opacity: .9; }
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn { to { opacity: 1; } }
+@keyframes cardIn { to { transform: translateX(-50%) scale(1); } }
+
+/* very narrow polish */
+@media (max-width: 360px) {
+  .mobileCard { width: 92vw; padding: 20px; }
+  .menuItem { font-size: 26px; }
+}
+
+

@@ -1,0 +1,112 @@
+:root{
+  /* контейнеры — как на остальных секциях */
+  --pad-x: 20px;
+  --pad-x-desktop: 80px;
+
+  /* фон и цвета */
+  --hero-bg: url('/assets/hero/hero.jpg'); /* ← поставь свой арт */
+  --hero-overlay-top: rgba(0,0,0,.25);
+  --hero-overlay-bottom: rgba(0,0,0,.65);
+
+  /* типографика */
+  --h1-min: 38px;
+  --h1-max: 64px;      /* примерно как на рефе (можешь поднять до 72-76) */
+  --lead: 16px;
+
+  /* кнопка learn more */
+  --accent: #7A3AED;
+  --brand-600:#7A1919;
+  --pill-size: 44px;
+}
+
+.container{ width: min(1400px, 100% - 2*var(--pad-x)); margin: 0 auto; }
+@media (min-width:1024px){ .container{ width: min(1400px, 100% - 2*var(--pad-x-desktop)); } }
+
+.hero{
+  /* полноэкранный блок + «full-bleed» по ширине */
+  position: relative;
+  min-height: 100vh;
+  width: 100vw;                /* растянуть на весь вьюпорт */
+  left: 50%;                   /* выровнять относительно контейнера */
+  margin-left: -50vw;          /* сделать full-bleed даже если Layout даёт отступы */
+  overflow: clip;
+
+  /* фон */
+  background: #000 center / cover no-repeat;
+  background-image: var(--hero-bg);
+
+  /* залезаем под хедер */
+  --header-large: var(--header-height-large, 96px); /* берём из header.module.scss, иначе 96px */
+  margin-top: calc(-1 * var(--header-large));       /* секция начинается под верх страницы */
+  padding-top: calc(var(--header-large) + env(safe-area-inset-top, 0px)); /* контент не перекрывается */
+}
+
+/* затемнение как у рефа: сверху слабее, у низа сильнее */
+.overlay{
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(180deg, var(--hero-overlay-top) 0%, rgba(0,0,0,0) 25%),
+    radial-gradient(120% 100% at 50% 10%, rgba(0,0,0,0) 0%, var(--hero-overlay-bottom) 70%);
+}
+
+/* центр контента */
+.center{
+  position: relative;
+  text-align: center;
+  color: #fff;
+  padding-top: 88px;   /* небольшой отступ от хедера */
+  padding-bottom: 88px;
+}
+
+/* заголовок в 3 строки с жирным трекингом */
+.title{
+  margin: 0 0 16px;
+  font-weight: 900;
+  letter-spacing: .02em;
+  line-height: 1.05;
+  font-size: clamp(var(--h1-min), 6vw, var(--h1-max));
+  text-shadow: 0 2px 18px rgba(0,0,0,.35); /* легкое свечение на фоне */
+}
+
+/* абзац под заголовком */
+.lead{
+  margin: 0 auto;
+  color: #e7e7e7;
+  font-size: var(--lead);
+  line-height: 1.45;
+  max-width: 720px;
+  text-shadow: 0 1px 12px rgba(0,0,0,.3);
+}
+
+/* Learn more (круглая фиолетовая "таблетка" + подпись) */
+.learn{
+  margin: 22px auto 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+
+.pill{
+  width: var(--pill-size);
+  height: var(--pill-size);
+  border-radius: 999px;
+  display: grid; place-items: center;
+  background: var(--brand-600);
+  color: #fff;
+  box-shadow: 0 8px 24px var(--brand-600);
+  transition: transform .18s ease, filter .18s ease;
+}
+.learn:hover .pill{ transform: translateY(2px); filter: brightness(.95); }
+.learnText{ opacity: .95; }
+
+/* слегка поджимаем на очень узких экранах */
+@media (max-width: 420px){
+  :root{
+    --pill-size: 40px;
+    --h1-max: 52px;
+  }
+}

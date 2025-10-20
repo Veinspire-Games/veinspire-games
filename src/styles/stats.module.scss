@@ -1,0 +1,116 @@
+:root{
+  --brand-600: #7A1919;   /* Тот же красный, что в About */
+  --ink-0: #FFFFFF;       /* Белый (цифры, заголовки) */
+  --ink-1: #F1F1F1;       /* Основной текст */
+  --ink-black: #0B0B0B;   /* Чёрный для label (как в Values) */
+  --rule: rgba(255,255,255,.24);
+}
+
+/* FULL-BLEED фон: и псевдо-элемент, и "вытягивание" секции на 100vw */
+.wrap{
+  position: relative;
+  isolation: isolate;
+  color: var(--ink-1);
+  padding: clamp(72px, 9vw, 120px) 0;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  overflow-x: clip;
+}
+.wrap::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--brand-600);
+  z-index: -1;
+}
+
+/* Лэйаут */
+.grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(36px, 5vw, 64px);
+  align-items: start;
+}
+@media (min-width:1024px){
+  .grid{
+    grid-template-columns: 1.15fr 2fr;
+    column-gap: clamp(48px, 6vw, 96px);
+  }
+}
+
+/* Левый столбец */
+.lead{ max-width: 48ch; }
+.title{
+  margin: 0 0 14px;
+  color: var(--ink-0);
+  font-weight: 800;
+  letter-spacing: .01em;
+  font-size: clamp(28px, 3.6vw, 40px);
+  line-height: 1.18;
+}
+.text{
+  margin: 0;
+  line-height: 1.6;
+  color: var(--ink-1);
+}
+
+/* Правый столбец 2×2 */
+.metrics{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(28px, 3.4vw, 40px);
+}
+@media (min-width:760px){
+  .metrics{ grid-template-columns: repeat(2, 1fr); }
+}
+
+.item{ min-height: 160px; }
+
+/* Label — крупнее и чёрный */
+.label{
+  color: var(--ink-black);
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-size: clamp(12px, 1.2vw, 14px);
+  margin-bottom: 12px;
+}
+
+/* Значения — меньше и без жирности */
+.value{
+  color: var(--ink-0);
+  font-weight: 400; /* убрали жирность */
+  font-size: clamp(42px, 7vw, 80px); /* стало поменьше */
+  line-height: .94;
+  white-space: nowrap;
+  transform: translateZ(0);
+}
+
+/* Небольшая разделительная линия */
+.rule{
+  height: 1px;
+  background: var(--rule);
+  margin: 12px 0;
+  width: clamp(140px, 44%, 260px);
+}
+
+/* Подпись */
+.desc{
+  margin: 0;
+  color: var(--ink-1);
+  font-size: 14px;
+  line-height: 1.55;
+  max-width: 44ch;
+}
+
+/* Лёгкий ховер на десктопе */
+@media (hover:hover){
+  .item:hover .value{ transform: translateY(-1px); transition: transform .18s ease; }
+}
+
+/* Мобильная версия: центрируем цифры и подписи */
+@media (max-width: 759px){
+  .metrics{ text-align: center; }
+  .rule{ margin-left: auto; margin-right: auto; }
+}

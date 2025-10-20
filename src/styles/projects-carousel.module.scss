@@ -1,0 +1,147 @@
+:root{
+  --brand-600:#7A1919; /* красный как в About/Stats */
+  --brand-700:#5E1111;
+  --paper-0:#FFFFFF;
+  --ink-900:#0B0B0B;   /* «чёрный», как в Values */
+  --pad-x: 20px;
+  --pad-x-desktop: 80px;
+}
+
+/* full-bleed фон секции + отступы сверху/снизу */
+.wrap{
+  width:100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  background: var(--ink-900);
+  padding-block: clamp(80px, 4vw, 90px);
+}
+
+.viewport{
+  position:relative;
+  /* одна общая переменная ширины слайда, чтобы ею могли пользоваться все дети */
+  --slide-w: min(86vw, 1120px);
+}
+
+/* трек — центр, без зазоров, видны соседи */
+.track{
+  display:flex;
+  gap:0;
+  overflow-x:auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width:none;
+  padding-inline: calc((100vw - var(--slide-w)) / 2);
+  scroll-behavior:smooth;
+  overscroll-behavior-x:contain;
+  touch-action:pan-y;
+}
+.track::-webkit-scrollbar{ display:none; }
+
+.slide{
+  flex:0 0 var(--slide-w);
+  scroll-snap-align:center;
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  margin-inline:-0.5px; /* убираем сабпиксельный «шов» */
+}
+
+.media{ width:100%; height:100%; }
+.media > img,
+.media > picture,
+.media > video{
+  display:block; width:100%; height:100%; object-fit:cover;
+}
+
+/* DESKTOP CTA — «прилипает» к карточке (скрыта на мобилке) */
+.cta{
+  position:absolute;
+  right: clamp(14px, 2.6vw, 28px);
+  bottom: clamp(14px, 2.6vw, 28px);
+  z-index:5;
+  display:inline-flex; align-items:center; justify-content:center;
+  height:46px; padding:0 18px;
+  background: var(--brand-600); color:#fff; text-decoration:none; font-weight:800;
+  border:none; border-radius:6px;
+  box-shadow:0 8px 24px rgba(0,0,0,.28);
+  opacity:0; pointer-events:none; transform: translateY(6px);
+  transition: opacity .2s ease, transform .2s ease, background .15s ease;
+}
+.cta:hover{ background: var(--brand-700); }
+.slide[data-active="true"] .cta{ opacity:1; pointer-events:auto; transform:translateY(0); }
+
+/* стрелки */
+.nav{
+  position:absolute; top:50%; transform: translateY(-50%);
+  z-index:10; width:48px; height:48px; border-radius:8px;
+  border:none; cursor:pointer; color:#fff; background: var(--brand-600);
+  display:grid; place-items:center;
+  box-shadow: 0 8px 24px rgba(0,0,0,.28);
+  transition: background .2s ease, transform .2s ease;
+}
+.nav:hover{ background: var(--brand-700); transform: translateY(-50%) scale(1.03); }
+.prev{ left: clamp(10px, 1.8vw, 18px); }
+.next{ right: clamp(10px, 1.8vw, 18px); }
+
+/* счётчик */
+.footer{ display:flex; justify-content:center; margin-top: clamp(14px, 2.2vw, 20px); }
+.counter{
+  display:inline-flex; gap:10px; align-items:center;
+  background: var(--brand-600); color: var(--paper-0);
+  padding: 6px 12px; border-radius: 999px;
+  font-weight: 800; letter-spacing:.04em; font-size:14px;
+}
+.counter em{ opacity:.75; font-style:normal; }
+
+/* ===== MOBILE LAYOUT ===== */
+.ctaMobile{ display:none; } /* по умолчанию скрыта, покажем на мобилках */
+
+/* ===== MOBILE LAYOUT (<=600px) ===== */
+/* ===== MOBILE (<=600px): стрелки по центру, CTA и счётчик снизу ===== */
+@media (max-width: 600px){
+  .track{ --slide-w: 88vw; }
+
+  .viewport{
+    position: relative;
+    --nav-size: 42px;         /* размер стрелок на мобиле */
+    --controls-h: 42px;       /* высота кнопки Our projects */
+    --counter-h: 34px;        /* высота счётчика */
+    --gap: 10px;
+    /* запас снизу только под CTA и счётчик (стрелки теперь по центру) */
+    padding-bottom: calc(var(--controls-h) + var(--gap) + var(--counter-h) + 12px);
+  }
+
+  /* карточная CTA на мобиле скрыта */
+  .cta{ display: none !important; }
+
+  /* ← вот это главное изменение: стрелки возвращаем в центр слайда */
+  .prev, .next{
+    position: absolute;
+    top: 50%;
+    bottom: auto;             /* раньше было bottom: ... — убираем */
+    width: var(--nav-size);
+    height: var(--nav-size);
+    transform: translateY(-50%);
+    z-index: 12;
+  }
+  .prev{ left: 12px; }
+  .next{ right: 12px; }
+
+  /* мобильная кнопка Our projects — над счётчиком, по центру */
+  .ctaMobile{
+    position: absolute;
+    left: 50%;
+    bottom: calc(var(--counter-h) + var(--gap));
+    transform: translateX(-50%);
+    display: inline-flex; align-items: center; justify-content: center;
+    height: var(--controls-h); padding: 0 14px;
+    background: var(--brand-600); color:#fff; font-weight: 800;
+    border: none; border-radius: 6px; box-shadow: 0 8px 24px rgba(0,0,0,.28);
+  }
+  .ctaMobile:hover{ background: var(--brand-700); }
+
+  /* счётчик — у самой нижней кромки секции */
+  .footer{
+    position: absolute; left: 0; right: 0; bottom: 0;
+    margin-top: 0; display: flex; justify-content: center;
+  }
+}

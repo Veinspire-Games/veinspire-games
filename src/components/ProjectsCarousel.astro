@@ -1,0 +1,151 @@
+---
+import s from "../styles/projects-carousel.module.scss";
+
+// Твои карточки
+import project1 from "../projects/cards/project1.astro";
+import project2 from "../projects/cards/project2.astro";
+import project3 from "../projects/cards/project3.astro";
+import project4 from "../projects/cards/project4.astro";
+import project5 from "../projects/cards/project5.astro";
+
+const slides = [project1, project2, project3, project4, project5];
+---
+<section class={s.wrap} aria-label="Projects carousel">
+  <div class={s.viewport}>
+    <!-- стрелки (общие) -->
+    <button id="projPrev" class={`${s.nav} ${s.prev}`} type="button" aria-label="Previous slide">‹</button>
+
+    <!-- сам трек -->
+    <div class={s.track} id="projectsTrack" aria-live="polite">
+      {slides.map((Card, i) => (
+        <div class={s.slide} data-index={i} data-active={i === 0 ? "true" : "false"}>
+          <div class={s.media}><Card /></div>
+          <!-- DESKTOP CTA: внутри каждого слайда (скрыта на мобилках) -->
+          <a href="/projects" class={s.cta} data-cta>Our projects</a>
+        </div>
+      ))}
+    </div>
+
+    <button id="projNext" class={`${s.nav} ${s.next}`} type="button" aria-label="Next slide">›</button>
+
+    <!-- MOBILE CTA: одна общая, под карточкой, показываем только на мобилках -->
+    <a href="/projects" class={s.ctaMobile}>Our projects</a>
+
+    <!-- счётчик -->
+    <div class={s.footer}>
+      <span class={s.counter}><b id="pcur">1</b><em>/</em><span id="ptotal">{slides.length}</span></span>
+    </div>
+  </div>
+
+  <script is:inline>
+    (function () {
+      const track = document.getElementById('projectsTrack');
+      const prevBtn = document.getElementById('projPrev');
+      const nextBtn = document.getElementById('projNext');
+      const curEl = document.getElementById('pcur');
+      if (!track || !prevBtn || !nextBtn || !curEl) return;
+
+      // клоны для бесконечной ленты
+      const realSlides = Array.from(track.children);
+      const REAL = realSlides.length;
+      const firstClone = realSlides[0].cloneNode(true);
+      const lastClone  = realSlides[REAL-1].cloneNode(true);
+      track.insertBefore(lastClone, realSlides[0]);
+      track.appendChild(firstClone);
+
+      const slides = Array.from(track.children);
+      let index = 1; // первый реальный
+      const total = REAL;
+
+      const slideW = () => slides[0].getBoundingClientRect().width;
+      const toOffset = (i) => i * slideW();
+
+      const setCounter = () => curEl.textContent = String(((index-1+REAL)%REAL)+1);
+      function markActive(){ slides.forEach((el,i)=>el.dataset.active = (i===index?'true':'false')); setCounter(); }
+
+      // начальная позиция без «прыжка»
+      track.style.scrollBehavior = 'auto';
+      track.scrollLeft = toOffset(index);
+      requestAnimationFrame(()=>track.style.scrollBehavior='');
+
+      let fixT = 0;
+      function snapFixIfClone(){
+        if (index === 0){
+          index = REAL;
+          track.style.scrollBehavior = 'auto';
+          track.scrollLeft = toOffset(index);
+          requestAnimationFrame(()=>track.style.scrollBehavior='');
+          markActive();
+        } else if (index === REAL+1){
+          index = 1;
+          track.style.scrollBehavior = 'auto';
+          track.scrollLeft = toOffset(index);
+          requestAnimationFrame(()=>track.style.scrollBehavior='');
+          markActive();
+        }
+      }
+
+      function go(i, smooth=true){
+        index = i;
+        track.style.scrollBehavior = smooth ? 'smooth' : 'auto';
+        track.scrollLeft = toOffset(index);
+        if (!smooth) requestAnimationFrame(()=>track.style.scrollBehavior='');
+        markActive();
+        resetAutoplay();
+        clearTimeout(fixT);
+        fixT = setTimeout(snapFixIfClone, 360);
+      }
+
+      // стрелки
+      prevBtn.addEventListener('click', ()=>go(index-1));
+      nextBtn.addEventListener('click', ()=>go(index+1));
+
+      // swipe/drag
+      let drag = {active:false,startX:0,startLeft:0,startT:0};
+      track.addEventListener('pointerdown', (e)=>{
+        if (e.button!==0) return;
+        if (e.target && e.target.closest && e.target.closest('[data-cta]')) return;
+        drag = {active:true, startX:e.clientX, startLeft:track.scrollLeft, startT:performance.now()};
+        track.setPointerCapture(e.pointerId);
+      });
+      track.addEventListener('pointermove', (e)=>{
+        if (!drag.active) return;
+        track.scrollLeft = drag.startLeft - (e.clientX - drag.startX);
+      });
+      track.addEventListener('pointerup', (e)=>{
+        if (!drag.active) return;
+        drag.active = false;
+        const dx = e.clientX - drag.startX;
+        const v = Math.abs(dx) / Math.max(1, performance.now()-drag.startT);
+        if (Math.abs(dx) > 24 || v > 0.45) go(index + (dx < 0 ? 1 : -1));
+        else go(index, true);
+        track.releasePointerCapture?.(e.pointerId);
+      });
+
+      // синхронизация индекса при колёсике/инерции
+      let syncRaf = 0;
+      track.addEventListener('scroll', ()=>{
+        if (syncRaf) return;
+        syncRaf = requestAnimationFrame(()=>{
+          const i = Math.round(track.scrollLeft / slideW());
+          if (i !== index){ index = i; markActive(); resetAutoplay(); }
+          syncRaf = 0;
+        });
+      });
+
+      // автоплей
+      let timer = 0;
+      const AUTOPLAY_MS = 15000;
+      function resetAutoplay(){
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(()=>go(index+1), AUTOPLAY_MS);
+      }
+      resetAutoplay();
+      ['pointerdown','wheel','keydown'].forEach(ev => track.addEventListener(ev, resetAutoplay, {passive:true}));
+
+      // стартовые метки
+      markActive();
+      setCounter();
+    })();
+  </script>
+</section>

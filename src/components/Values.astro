@@ -1,0 +1,53 @@
+---
+import s from "../styles/values.module.scss";
+
+const items = [
+  {
+    title: "Games are in our DNA",
+    text:
+      "We began as a game dev company with our own IP: our love for games shapes everything we create.",
+  },
+  {
+    title: "Trust and reliability",
+    text:
+      "With a global CSAT score of 8.8/10, our clients are confident in our ability to deliver effectively.",
+  },
+  {
+    title: "One team, one goal",
+    text:
+      "We’re not multiple companies collaborating to deliver: we have a core team in charge who build production teams from specialized verticals.",
+  },
+  {
+    title: "Industry contributors",
+    text:
+      "We care deeply about the games industry. That’s why we always strive to foster its growth; for example, by sharing open-source tools with other developers.",
+  },
+  {
+    title: "International talent",
+    text:
+      "With specialists across three continents, we leverage the power of cultural diversity to co-create rich, universally engaging games.",
+  },
+  {
+    title: "Leader in R&D",
+    text:
+      "Our industry-leading research and development team finds creative tech solutions to make our partners’ work more efficient and effective.",
+  },
+];
+---
+
+<section class={s.wrap} aria-label="About values grid">
+  <div class="container">
+    {/* верхняя красная разделительная линия, как на рефе */}
+    <div class={s.topRule} aria-hidden="true"></div>
+
+    <div class={s.grid}>
+      {items.map(({ title, text }, i) => (
+        <article class={s.card}>
+          <span class={s.dot} aria-hidden="true"></span>
+          <h3 class={s.title}>{title}</h3>
+          <p class={s.desc}>{text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

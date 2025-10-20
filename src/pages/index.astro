@@ -1,9 +1,25 @@
 ---
-import BaseLayout from "@layouts/BaseLayout.astro";
-import Hero from "@components/Hero.astro";
-import SolutionsGrid from "@components/SolutionsGrid.astro";
+import Layout from "../layouts/MainLayout.astro";
+import Hero from "../components/Hero.astro";
+import About from "../components/About.astro";
+import Values from "../components/Values.astro";
+import Stats from "../components/Stats.astro";
+import ProjectsCarousel from "../components/ProjectsCarousel.astro";
+import SolutionsAccordion from "../components/SolutionsAccordion.astro";
+import TalkCta from "../components/TalkCta.astro";
+
+import Footer from "../components/Footer.astro";
+import BackOneSection from "../components/BackOneSection.astro";
 ---
-<BaseLayout title="Veinspire Games — Co-Dev Partner">
-  <Hero />
-  <SolutionsGrid />
-</BaseLayout>
+<Layout title="Home — Veinspire Games">
+  <main>
+    <Hero />
+    <About />
+    <Values />
+    <Stats />
+    <ProjectsCarousel />
+    <SolutionsAccordion />
+    <TalkCta />
+  </main>
+  <BackOneSection />
+</Layout>

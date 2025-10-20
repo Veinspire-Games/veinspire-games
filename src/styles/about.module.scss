@@ -1,0 +1,50 @@
+.container{ width:min(1400px, 100% - 2*var(--pad-x)); margin:0 auto; }
+@media (min-width:1024px){ .container{ width:min(1400px, 100% - 2*var(--pad-x-desktop)); } }
+
+.wrap{
+  position: relative;
+  color: var(--ink-900);
+  background: var(--brand-600);
+  padding: clamp(72px, 10vw, 120px) 0 clamp(56px, 8vw, 96px);
+
+  /* FULL-BLEED без псевдоэлементов */
+  width: 100vw;                               /* растягиваем секцию на ширину окна */
+  margin-left: calc(50% - 50vw);              /* вытягиваем из центрального контейнера */
+  margin-right: calc(50% - 50vw);
+  overflow-x: clip;                            /* на всякий случай — без горизонт.скролла */
+
+  /* старт/появление/перекраска */
+  &[data-state="init"] .display{ opacity:0; transform: translateY(8px); }
+  &[data-state="shown"] .display{
+    opacity:1; transform:none;
+    transition: opacity 420ms ease, transform 420ms ease;
+  }
+  &[data-state="colored"] .display .hi{ color: var(--paper-0); }
+}
+
+/* контейнер внутри оставляем как есть */
+.container{ width:min(1400px, 100% - 2*var(--pad-x)); margin:0 auto; }
+@media (min-width:1024px){ .container{ width:min(1400px, 100% - 2*var(--pad-x-desktop)); } }
+
+
+/* большой «постерный» абзац */
+.display{
+  font-weight: 900;
+  
+  line-height: 1.18;
+  letter-spacing: .01em;
+  font-size: clamp(28px, 4.2vw, 56px);
+  max-width: 1200px;
+  margin: 0 auto;        /* ← центрируем сам блок */
+  text-align: center;    /* ← выравниваем строки по центру */
+  text-wrap: balance; /* более ровные переносы */
+  color: var(--ink-900);
+  text-shadow: 0 1px 0 rgba(0,0,0,.05);
+}
+
+/* выделяемые фразы: на старте они "как обычный текст", затем перекрашиваются */
+.hi{
+  color: inherit;
+  transition: color 360ms cubic-bezier(.22,.61,.36,1);
+  transition-delay: var(--d, 0s);  /* управляем задержкой через style="--d:.2s" */
+}

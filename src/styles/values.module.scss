@@ -1,0 +1,105 @@
+/* ===== Палитра для секции ===== */
+:root{
+  /* фон секции (чёрный, как в About) и текст */
+  --bg: #0B0B0B;             /* чёрный full-bleed фон */
+  --text: #FFFFFF;           /* белый текст */
+
+  /* акценты */
+  --brand-400: #B72828;
+  --brand-500: #8B1E1E;      /* разделительные линии */
+  --brand-600: #7A1919;      /* заливка карточки при hover */
+
+  /* остальные */
+  --dot-idle: #A9A9A9;       /* серый квадратик по умолчанию */
+  --dot-hover: #FFFFFF;      /* становится белым на hover */
+
+  --pad-x: 20px;
+  --pad-x-desktop: 80px;
+}
+
+.container{ width:min(1400px, 100% - 2*var(--pad-x)); margin:0 auto; }
+@media (min-width:1024px){ .container{ width:min(1400px, 100% - 2*var(--pad-x-desktop)); } }
+
+/* ===== FULL-BLEED: фон на всю ширину экрана ===== */
+.wrap{
+  position: relative;
+  color: var(--text);
+  background: var(--bg);
+  padding: clamp(56px, 7vw, 84px) 0;
+
+  /* растянуть секцию шире контейнера лэйаута */
+  width: 100svw;                               /* fallback ниже */
+  margin-left: calc(50% - 50svw);
+  margin-right: calc(50% - 50svw);
+  overflow-x: clip;
+}
+@supports not (width: 100svw){
+  .wrap{
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+}
+
+/* ===== Grid 3×2 без зазоров, красные «рёбра» ===== */
+.grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  border-left: 1px solid var(--brand-500);
+  border-right: 1px solid var(--brand-500);
+}
+@media (min-width:1024px){
+  .grid{ grid-template-columns: repeat(3, 1fr); }
+}
+
+.card{
+  padding: clamp(18px, 2.6vw, 26px) clamp(18px, 2.6vw, 26px) clamp(22px, 3vw, 30px);
+  background: transparent;
+  border-bottom: 1px solid var(--brand-500);
+  border-right: 1px solid var(--brand-500);
+  transition: background .18s ease, color .18s ease;
+
+  /* убрать правый бордер у третьей колонки */
+  &:nth-child(3n){ border-right: none; }
+  /* убрать нижний бордер у последней строки */
+  &:nth-last-child(-n+3){ border-bottom: none; }
+}
+
+/* заливка карточки при hover — тёмно-красная; текст остаётся белым */
+.card:hover{
+  background: var(--brand-600);
+  color: var(--text);
+}
+
+/* квадратик */
+.dot{
+  display:inline-block;
+  width: 18px; height: 18px;
+  background: var(--dot-idle);
+  margin-bottom: clamp(14px, 2vw, 18px);
+  transition: background .18s ease, transform .18s ease;
+}
+.card:hover .dot{ background: var(--dot-hover); transform: translateY(-1px); }
+
+.title{
+  margin: 0 0 clamp(10px, 1.6vw, 14px);
+  font-weight: 800;
+  letter-spacing: .005em;
+  line-height: 1.15;
+  font-size: clamp(22px, 2.6vw, 32px);
+  color: inherit;   /* берём белый/hover из карточки */
+}
+
+.desc{
+  margin: 0;
+  line-height: 1.55;
+  font-size: clamp(14px, 1.4vw, 16px);
+  color: color-mix(in oklab, var(--text) 92%, black); /* чуть мягче белого */
+}
+
+/* мобильная версия: одна колонка, рёбра только горизонтальные */
+@media (max-width:1023px){
+  .grid{ border-left: none; border-right: none; }
+  .card{ border-right: none; }
+}

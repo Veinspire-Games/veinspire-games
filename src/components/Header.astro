@@ -1,53 +1,180 @@
 ---
-const menu=[
-  {label:"About",href:"/about"},
-  {label:"Solutions",children:[
-    {label:"Game Development",href:"/solutions/game-development"},
-    {label:"Technology",href:"/solutions/technology"},
-    {label:"Art",href:"/solutions/art"},
-    {label:"Trailers & Cinematics",href:"/solutions/trailers-cinematics"},
-    {label:"QA",href:"/solutions/qa"},
-    {label:"Training & Simulation",href:"/solutions/training-simulation"}
-  ]},
-  {label:"Case Studies",href:"/case-studies"},
-  {label:"Careers ↗",href:"https://www.linkedin.com/company/veinspire-games/jobs/?viewAsMember=true",external:true},
-  {label:"Contact",href:"/contact"}
+/**
+ * Header.astro — десктоп липкий (large/compact), мобильное меню — модальная карточка по центру.
+ * Логотипы лежат в /public/assets → используем абсолютные пути.
+ */
+import styles from "../styles/header.module.scss";
+
+type NavLink = {
+  label: string;
+  href: string;
+  external?: boolean;
+  kind?: "outline" | "primary";
+};
+
+const desktopLinks: NavLink[] = [
+  { label: "Projects", href: "/projects", external: false, kind: "outline" },
+  {
+    label: "Jobs",
+    href: "https://www.linkedin.com/company/veinspire-games/jobs/?viewAsMember=true",
+    external: true,
+    kind: "primary",
+  },
+  { label: "Contacts", href: "/contact", external: false, kind: "outline" },
 ];
+
+const mobileLinks: NavLink[] = [
+  { label: "Projects", href: "/projects" },
+  {
+    label: "Jobs",
+    href: "https://www.linkedin.com/company/veinspire-games/jobs/?viewAsMember=true",
+    external: true,
+  },
+  { label: "Contacts", href: "/contact" },
+];
+
+// Абсолютные пути к логотипам из public/assets
+const logoDarkUrl  = "/assets/veinspire-logo-dark.png";
+const logoLightUrl = "/assets/veinspire-logo-light.png";
 ---
-<header class="site-header">
-  <div class="container nav">
-    <a class="logo" href="/"><img src="/logo-veinspire.svg" alt="Veinspire" width="140" height="28" /></a>
-    <nav class="primary"><ul>
-      {menu.map(item=>(
-        <li>
-          {item.children ? (
-            <details>
-              <summary>{item.label}</summary>
-              <div class="dropdown">{item.children.map(ch=><a href={ch.href}>{ch.label}</a>)}</div>
-            </details>
-          ) : (
-            <a href={item.href} target={item.external?"_blank":"_self"} rel={item.external?"noopener":undefined}>{item.label}</a>
-          )}
-        </li>
+<header id="site-header" class={`${styles.header}`} aria-label="Site Header" data-state="large">
+  <div class={styles.inner}>
+    <!-- ЛОГО -->
+    <a href="/" class={styles.logo} aria-label="Veinspire Games — Home">
+      <img src={logoDarkUrl}  alt="Veinspire Games" class={`${styles.logoImg} ${styles.logoImgDark}`} width="100" height="100" decoding="async" />
+      <img src={logoLightUrl} alt="Veinspire Games" class={`${styles.logoImg} ${styles.logoImgLight}`} width="100" height="100" decoding="async" />
+    </a>
+
+    <!-- ДЕСКТОПНАЯ НАВИГАЦИЯ -->
+    <nav class={styles.desktopNav} aria-label="Primary">
+      {desktopLinks.map((l) => (
+        <a
+          class={`${styles.navLink} ${l.kind === "primary" ? styles.primary : styles.outline}`}
+          href={l.href}
+          target={l.external ? "_blank" : "_self"}
+          rel={l.external ? "noopener noreferrer" : undefined}
+        >
+          {l.label}
+        </a>
       ))}
-    </ul></nav>
-    <button class="hamburger" aria-label="Toggle menu" onclick="document.documentElement.classList.toggle('nav-open')">☰</button>
+    </nav>
+
+    <!-- ТРИГГЕР МОБИЛЬНОГО МОДАЛЬНОГО МЕНЮ -->
+    <button
+      id="mobileMenuBtn"
+      class={styles.menuBtn}
+      type="button"
+      aria-haspopup="dialog"
+      aria-controls="mobileMenu"
+      aria-expanded="false"
+    >
+      MENU
+    </button>
+  </div>
+
+  <!-- МОБИЛЬНОЕ МЕНЮ: оверлей + центральная карточка -->
+  <div
+    id="mobileMenu"
+    class={styles.mobileMenu}
+    role="dialog"
+    aria-modal="true"
+    aria-label="Site menu"
+    hidden
+  >
+    <div class={styles.mobileBackdrop} data-close="true" aria-hidden="true"></div>
+
+    <div class={styles.mobileCard} role="document">
+      <div class={styles.cardTop}>
+        <a href="/" class={styles.logoSmall} aria-label="Veinspire Games — Home">
+          <span class={styles.logoMark} aria-hidden="true"></span>
+        </a>
+        <button class={styles.closeBtn} type="button" aria-label="Close menu" data-close="true">✕</button>
+      </div>
+
+      <ul class={styles.menuList}>
+        {mobileLinks.map((l) => (
+          <li>
+            <a
+              href={l.href}
+              target={l.external ? "_blank" : "_self"}
+              rel={l.external ? "noopener noreferrer" : undefined}
+              class={styles.menuItem}
+              data-close="true"
+            >
+              {l.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
   </div>
 </header>
 
-<style lang="scss">
-.site-header{position:sticky;top:0;z-index:20;background:#0e0e13cc;backdrop-filter:blur(8px);border-bottom:1px solid #1d1d25}
-.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
-.primary ul{display:flex;gap:18px;align-items:center;margin:0;padding:0;list-style:none}
-.primary a,summary{color:#e9e9ee;font-weight:500;padding:10px 12px;border-radius:10px}
-.primary a:hover,summary:hover{background:var(--ink-700)}
-details{position:relative} summary{list-style:none;cursor:pointer} summary::-webkit-details-marker{display:none}
-.dropdown{position:absolute;top:100%;left:0;display:grid;gap:6px;min-width:260px;background:#0e0e13;border:1px solid #24242c;border-radius:12px;padding:10px;margin-top:8px}
-.hamburger{display:none}
-@media (max-width:980px){
-  .primary{display:none}.hamburger{display:block;color:#fff;background:var(--ink-700);border-radius:10px;padding:6px 10px}
-  html.nav-open .primary{display:block;position:absolute;left:0;right:0;top:64px;background:#0e0e13;border-bottom:1px solid #24242c}
-  html.nav-open .primary ul{flex-direction:column;align-items:stretch;padding:10px}
-  html.nav-open details .dropdown{position:static;border:none;padding:0;background:transparent}
-}
-</style>
+<!-- ===== Скрипт: состояние хедера + мобильная модалка (TS-safe) ===== -->
+<script>
+  // Липкий хедер: transparent -> black при скролле
+  (function manageHeaderState() {
+    const header = document.getElementById('site-header') as HTMLElement | null;
+    if (!header) return;
+
+    const switchAt = 24; // px
+    const onScroll = () => {
+      const state = window.scrollY > switchAt ? 'compact' : 'large';
+      if (header.dataset.state !== state) {
+        header.dataset.state = state;
+      }
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+
+  // Мобильное меню (модалка)
+  (function mobileMenu() {
+    const btn  = document.getElementById('mobileMenuBtn') as HTMLButtonElement | null;
+    const menu = document.getElementById('mobileMenu') as HTMLElement | null;
+
+    const lock = () => document.body.classList.add('lock-scroll');
+    const unlock = () => document.body.classList.remove('lock-scroll');
+
+    const open = () => {
+      if (!menu) return;
+      menu.hidden = false;
+      btn?.setAttribute('aria-expanded', 'true');
+      lock();
+      // Фокус на первую интерактивную — строго как HTMLElement
+      const first = menu.querySelector<HTMLElement>('a,button');
+      first?.focus();
+    };
+
+    const close = () => {
+      if (!menu) return;
+      menu.hidden = true;
+      btn?.setAttribute('aria-expanded', 'false');
+      unlock();
+      btn?.focus();
+    };
+
+    btn?.addEventListener('click', () => (menu?.hidden ? open() : close()));
+
+    // Закрытие по клику на оверлей / ✕ / пункты меню
+    menu?.addEventListener('click', (e: Event) => {
+      const t = e.target as HTMLElement | null;
+      if (t?.dataset?.close === 'true') close();
+    });
+
+    // Закрытие по ESC
+    window.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && menu && !menu.hidden) close();
+    });
+
+    // На десктопном брейкпоинте гарантированно закрываем мобильную модалку
+    const mq = window.matchMedia('(min-width: 1024px)');
+    const handle = () => { if (mq.matches) close(); };
+    if ('addEventListener' in mq) {
+      mq.addEventListener('change', handle);
+    } else {
+      // @ts-expect-error: старые типы MediaQueryList
+      mq.addListener(handle);
+    }
+  })();
+</script>

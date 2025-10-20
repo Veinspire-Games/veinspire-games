@@ -1,0 +1,29 @@
+// Veinspire brand (из логотипа)
+$brand-400: #B72828;
+$brand-500: #8B1E1E; // акцент (Jobs)
+$brand-600: #7A1919;
+$brand-700: #5E1111;
+
+$ink-900:   #EDEDED;
+$ink-800:   #D8D8D8;
+$ink-700:   #BDBDBD;
+
+$paper-0:   #0B0B0B;
+$paper-50:  #121212;
+
+// радиусы / отступы / анимация
+$radius-xs: .35rem;
+$radius-sm: .5rem;
+$radius-md: .75rem;
+
+$space-2: .5rem;
+$space-3: .75rem;
+$space-4: 1rem;
+$space-5: 1.25rem;
+$space-6: 1.5rem;
+$space-8: 2rem;
+
+$dur-s: 160ms;
+$dur-m: 260ms;
+$dur-l: 420ms;  // ← новая плавная длительность
+$ease: cubic-bezier(.22,.61,.36,1);

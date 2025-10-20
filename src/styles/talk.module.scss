@@ -1,0 +1,119 @@
+:root{
+  --ink-900:#0B0B0B;  /* чёрный фон, как в Values */
+  --paper-0:#FFFFFF;  /* белый текст */
+}
+
+/* full-bleed секция */
+.wrap{
+  width:100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  background: var(--ink-900);
+  padding-block: clamp(72px, 10vw, 140px);
+}
+
+.inner{
+  position: relative;
+  width: min(1400px, 100% - 2*clamp(16px, 4vw, 48px));
+  margin: 0 auto;
+}
+
+/* ССЫЛКА-ЗАГОЛОВОК (desktop) */
+.link{
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: clamp(12px, 2.4vw, 28px);
+  color: var(--paper-0);
+  text-decoration: none;
+
+  font-weight: 400;
+  letter-spacing: .02em;
+  line-height: .95;
+  font-size: clamp(48px, 12vw, 220px);
+}
+
+/* подчёркивание слева-направо */
+.link::after{
+  content:"";
+  position:absolute;
+  left:0; right:0;
+  bottom: clamp(-10px, -0.6vw, -8px);
+  height: clamp(3px, .6vw, 6px);
+  background: currentColor;
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform .45s cubic-bezier(.22,.61,.36,1);
+}
+.link:hover::after,
+.link:focus-visible::after{ transform: scaleX(1); }
+
+.text{
+  display:inline-block;
+  white-space: nowrap;  /* на desktop всё в одну строку */
+}
+.word{ display:inline; }
+.arrow{ display:inline-block; transform: translateY(clamp(2px, .3vw, 4px)); }
+
+/* подпись справа внизу */
+.note{
+  position: absolute;
+  right: 0;
+  bottom: clamp(-12px, -1vw, -8px);
+  margin: 0;
+  color: var(--paper-0);
+  font-size: clamp(12px, 1.1vw, 14px);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  opacity: .9;
+}
+
+/* ===== Mobile layout (как на референсе) ===== */
+@media (max-width: 640px){
+  .link{
+    display:flex;
+    flex-direction: column;
+    align-items: center;      /* <- центр по горизонтали */
+    justify-content: center;
+    gap: clamp(10px, 3.5vw, 14px);
+
+    /* крупнее шрифт на мобиле */
+    font-size: clamp(56px, 18vw, 92px);
+    line-height: 1;
+    text-align: center;       /* <- центрируем текст */
+    width: 100%;
+  }
+
+  .text{
+    white-space: normal;
+    text-align: center;       /* <- центр слов */
+  }
+  .word{
+    display:block;            /* LET’S / TALK по строкам */
+  }
+
+  .arrow{
+    align-self: center;       /* стрелка под словами по центру */
+    transform: none;
+  }
+
+  /* подчёркивание — по ширине текста, по центру */
+  .link::after{
+    left: 50%;
+    transform-origin: left center;
+    transform: translateX(-50%) scaleX(0);
+    bottom: clamp(-10px, -1.2vw, -6px);
+    height: 3px;
+  }
+  .link:hover::after,
+  .link:focus-visible::after{
+    transform: translateX(-50%) scaleX(1);
+  }
+
+  .note{
+    position: static;
+    margin-top: clamp(18px, 6vw, 28px);
+    text-align: center;       /* подпись тоже по центру */
+    opacity: .85;
+  }
+}

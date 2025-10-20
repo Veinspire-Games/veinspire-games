@@ -1,0 +1,28 @@
+---
+import ProjectCard from "../../components/ProjectCarouselCard.astro";
+import type { Project } from "../../projects/projectData.ts";
+
+export const project: Project = {
+  id: "project3",
+  title: "PROJECT 3",
+  short: "Port to Xbox One and PlayStation 4",
+  image: "/assets/projects/project3.jpg",
+  tags: ["Porting", "Console"],
+  releaseDate: "2020",
+  trailerUrl: "https://youtube.com/watch?v=Xn676-fLq7I&list=RDXn676-fLq7I&start_radio=1",
+  projectWebsiteUrl:"https://youtu.be/yyyyyyyy",
+  details: [
+    "Optimized CPU/GPU for consoles Optimized CPU/GPU for consoles Optimized CPU/GPU for consoles",
+    "HDR pass & certification support Optimized CPU/GPU for consoles Optimized CPU/GPU for consoles",
+    "Optimized CPU/GPU for consoles Optimized CPU/GPU for consoles Optimized CPU/GPU for consoles"
+  ],
+  basics: ["Engine: Unreal", 
+  "Platforms: PS4, Xbox One",
+  "Platforms: PS4, Xbox One",
+  "Platforms: PS4, Xbox One"
+],
+  client: ["2K Czech"]
+};
+---
+
+<ProjectCard {...project} />

@@ -1,0 +1,121 @@
+---
+import s from "../styles/stats.module.scss";
+
+const lead = {
+  title: "See What We’re Made",
+  text:
+    "As a game developer, we’ve stood the test of time. Check out some of our current stats."
+};
+
+const stats = [
+  { label: "Years",           value: 10,  prefix: "",  suffix: "+",  desc: "Older than most, and still going strong." },
+  { label: "People",          value: 20, prefix: "≈", suffix: "",  desc: "From Art to Tech to QA, and everything in between." },
+  { label: "Nationalities",   value: 5,  prefix: "≈", suffix: "",  desc: "A global staff, delivering to fans across the world." },
+  { label: "Projects",        value: 20, prefix: "",  suffix: "+", desc: "Continuously delivering features, content and improvements." },
+];
+---
+
+<section id="stats" class={s.wrap} aria-label="Company metrics">
+  <div class="container">
+    <div class={s.grid}>
+      <div class={s.lead}>
+        <h2 class={s.title}>{lead.title}</h2>
+        <p class={s.text}>{lead.text}</p>
+      </div>
+
+      <div class={s.metrics}>
+        {stats.map(({ label, value, prefix, suffix, desc }) => (
+          <article class={s.item}>
+            <div class={s.label}>{label}</div>
+            <div
+              class={s.value}
+              data-target={value}
+              data-prefix={prefix}
+              data-suffix={suffix}
+              aria-label={`${label}: ${prefix}${value}${suffix}`}
+            >
+              {prefix}0{suffix}
+            </div>
+            <div class={s.rule} aria-hidden="true"></div>
+            <p class={s.desc}>{desc}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <script is:inline>
+  (function () {
+    const root = document.getElementById("stats");
+    if (!root) return;
+
+    const els = Array.from(root.querySelectorAll("[data-target]"));
+
+    const setFinal = (el) => {
+      const prefix = el.dataset.prefix ?? "";
+      const suffix = el.dataset.suffix ?? "";
+      const target = Number(el.dataset.target || "0");
+      el.textContent = prefix + target + suffix;
+      el.dataset.done = "1";
+    };
+
+    const animate = (el) => {
+      if (el.dataset.done === "1") return;
+      const target = Number(el.dataset.target || "0");
+      const prefix = el.dataset.prefix ?? "";
+      const suffix = el.dataset.suffix ?? "";
+      const dur = 1200;
+      const start = performance.now();
+
+      const tick = (t) => {
+        const p = Math.min(1, (t - start) / dur);
+        const e = 1 - Math.pow(1 - p, 3); // easeOutCubic
+        const curr = Math.round(target * e);
+        el.textContent = prefix + curr + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+        else { el.dataset.done = "1"; }
+      };
+
+      requestAnimationFrame(tick);
+    };
+
+    const startAnimation = () => {
+      // Если уже анимировали — сразу конечные
+      if (sessionStorage.getItem("stats-animated") === "1") {
+        els.forEach(setFinal);
+        return;
+      }
+
+      // Если IntersectionObserver доступен — используем его
+      if ("IntersectionObserver" in window) {
+        const io = new IntersectionObserver((entries) => {
+          if (!entries[0].isIntersecting) return;
+          els.forEach(animate);
+          sessionStorage.setItem("stats-animated", "1");
+          io.disconnect();
+        }, { threshold: 0.2 });
+        io.observe(root);
+
+        // На случай, если секция уже видна в момент подключения IO
+        const r = root.getBoundingClientRect();
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        if (r.top < vh * 0.8 && r.bottom > 0) {
+          els.forEach(animate);
+          sessionStorage.setItem("stats-animated", "1");
+          io.disconnect();
+        }
+      } else {
+        // Полный fallback без IO
+        els.forEach(animate);
+        sessionStorage.setItem("stats-animated", "1");
+      }
+    };
+
+    if (document.readyState === "complete" || document.readyState === "interactive") {
+      startAnimation();
+    } else {
+      document.addEventListener("DOMContentLoaded", startAnimation, { once: true });
+    }
+  })();
+</script>
+
