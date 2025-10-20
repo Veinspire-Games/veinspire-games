@@ -11,12 +11,18 @@ const { title = "Veinspire Games", description = "Studio site" } = Astro.props;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>{title}</title>
     <meta name="description" content={description} />
+
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <link rel="icon" href="/favicon.ico" />
+
+    <!-- Favicon (минимально, один PNG) -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+
     <style>
       :root{
         --brand-600:#7A1919;
@@ -24,7 +30,6 @@ const { title = "Veinspire Games", description = "Studio site" } = Astro.props;
         --paper-0:#fff;
         --ink-900:#0B0B0B;
       }
-      /* чёрный фон всего сайта, чтобы нигде не «просвечивало» */
       body{
         min-height:100dvh;
         display:flex;
@@ -32,7 +37,7 @@ const { title = "Veinspire Games", description = "Studio site" } = Astro.props;
         background: var(--ink-900);
         color: var(--paper-0);
       }
-      main{ flex: 1 0 auto; } /* без лишних паддингов/маржинов */
+      main{ flex: 1 0 auto; }
     </style>
   </head>
 
