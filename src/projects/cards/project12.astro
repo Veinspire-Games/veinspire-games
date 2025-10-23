@@ -1,0 +1,26 @@
+---
+import ProjectCard from "../../components/ProjectCarouselCard.astro";
+import type { Project } from "../../projects/projectData.ts";
+
+export const project: Project = {
+  id: "project5",
+  title: "UNANNOUNCED SURVIVAL PROJECT (NDA)",
+  short: "Comparable to Green Hell, Stranded Deep, The Forest; co-dev of vertical slice and ongoing production",
+  image: "/assets/projects/project12.jpg",
+  tags: ["Porting", "Console"],
+  releaseDate: "To Be Announced",
+  details: [
+    "Built a gameplay vertical slice: full core loop (gathering, crafting, survival) in a dense tropical biome",
+    "Implemented core systems: health/hunger/hydration/stamina, animal AI with hazards (traps/poison), modular shelters, env. interactions",
+    "Continued as co-dev in production: extended survival mechanics, expanded AI behaviors, added sandbox systems & multiple biomes",
+    "Tooling and balancing support: inventory/HUD/context prompts UX, ambient audio/VO hooks, iterative tuning and perf passes"
+  ],
+  basics: ["Engine: Unreal Engine 5", 
+  "Platforms: PC, PlayStation, Xbox",
+  "Team/Tools/Status: Game Designer; 2 Gameplay Programmers; 3D Env Artist; 3D Character Artist; Animator; UI/UX Designer; Sound Designer; QA; Producer; Status — In production (NDA)"
+],
+  client: ["Undisclosed (NDA)"]
+};
+---
+
+<ProjectCard {...project} />

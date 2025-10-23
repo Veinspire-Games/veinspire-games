@@ -1,0 +1,28 @@
+---
+import ProjectCard from "../../components/ProjectCarouselCard.astro";
+import type { Project } from "../../projects/projectData.ts";
+
+export const project: Project = {
+  id: "project6",
+  title: "LIFE IS STRANGE",
+  short: "Developer on a shipped episodic narrative adventure",
+  image: "/assets/projects/project6.jpg",
+  tags: ["Porting", "Console"],
+  releaseDate: "2015",
+  trailerUrl: "https://store.steampowered.com/app/319630/Life_is_Strange__Episode_1/",
+  projectWebsiteUrl:"https://deckninegames.com/life-is-strange-remastered/",
+  details: [
+    "Implemented animation system, gameplay scripting for choice-driven scenes and interactions",
+    "Integrated dialogue/choice logic with state tracking and save/rollback",
+    "Tools and pipeline support (level scripting, data flow, debug workflows)",
+    "Bug fixing and performance/stability passes across milestone builds"
+  ],
+  basics: ["Unreal Engine 3", 
+  "Platforms: PC, PlayStation, Xbox",
+  "Team/Tools/Status: Role — Developer; UE3 toolchain (Kismet/UnrealScript), Jira/Perforce; Status — Shipped"
+],
+  client: ["Deck Nine Games (prior employment of core team member)"]
+};
+---
+
+<ProjectCard {...project} />

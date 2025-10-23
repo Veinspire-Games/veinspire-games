@@ -1,0 +1,26 @@
+---
+import ProjectCard from "../../components/ProjectCarouselCard.astro";
+import type { Project } from "../../projects/projectData.ts";
+
+export const project: Project = {
+  id: "project12",
+  title: "UNANNOUNCED OPEN-WORLD RPG (NDA)",
+  short: "Comparable to Kingdom Come: Deliverance, Mount & Blade II: Bannerlord; co-dev of world locations and quest systems",
+  image: "/assets/projects/project11.jpg",
+  tags: ["Porting", "Console"],
+  releaseDate: "To Be Announced",
+  details: [
+    "Built a large world-content slice: 5 settlements and ~40 POIs integrated into the client landscape",
+    "Level design & 3D environment art: asset placement, pathing, interiors, interactive elements",
+    "Quest design & implementation: 15 quests (dialogue/exploration/combat) with branching and consequences",
+    "Full integration with client scripting/trigger framework, plus AI nav, entrances, interactions, and quest logic"
+  ],
+  basics: ["Engine: Unreal Engine 5", 
+  "Platforms: PC",
+  "Team/Tools/Status: Veinspire co-dev unit (Lead Level Designer, Environment Artist, Quest/Technical Designer, Gameplay Programmer, Producer); Status — In production (NDA)"
+],
+  client: ["Undisclosed (NDA)"]
+};
+---
+
+<ProjectCard {...project} />

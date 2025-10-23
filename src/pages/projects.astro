@@ -3,19 +3,39 @@ import MainLayout from "../layouts/MainLayout.astro";
 import ProjectsGrid from "../components/ProjectsGrid.astro";
 
 // Карточки (визуал) + их данные (named export `project`)
-import VisageCard, { project as project1 } from "../projects/cards/project1.astro";
-import Mafia2Card, { project as project2 } from "../projects/cards/project2.astro";
-import MafiaCard,  { project as project3 }  from "../projects/cards/project3.astro";
-import CandyCard,  { project as project4 }  from "../projects/cards/project4.astro";
-import CandyCard2,  { project as project5 }  from "../projects/cards/project5.astro";
+import Project1, { project as project1 } from "../projects/cards/project1.astro";
+import Project2, { project as project2 } from "../projects/cards/project2.astro";
+import Project3,  { project as project3 }  from "../projects/cards/project3.astro";
+import Project9,  { project as project9 }  from "../projects/cards/project9.astro";
+import Project5,  { project as project5 }  from "../projects/cards/project5.astro";
+import Project6,  { project as project6 }  from "../projects/cards/project6.astro";
+import Project7,  { project as project7 }  from "../projects/cards/project7.astro";
+import Project8,  { project as project8 }  from "../projects/cards/project8.astro";
+import Project4,  { project as project4 }  from "../projects/cards/project4.astro";
+import Project10,  { project as project10 }  from "../projects/cards/project10.astro";
+import Project11,  { project as project11 }  from "../projects/cards/project11.astro";
+import Project12,  { project as project12 }  from "../projects/cards/project12.astro";
+import Project13,  { project as project13 }  from "../projects/cards/project13.astro";
+import Project14,  { project as project14 }  from "../projects/cards/project14.astro";
+import Project15,  { project as project15 }  from "../projects/cards/project15.astro";
 
 // Управляем составом грида здесь одной строкой:
 const items = [
   { Comp: project1, data: project1 },
   { Comp: project2, data: project2 },
   { Comp: project3,  data: project3 },
-  { Comp: project4,  data: project4 },
+  { Comp: project9,  data: project9 },
   { Comp: project5,  data: project5 },
+  { Comp: project6,  data: project6 },
+  { Comp: project7,  data: project7 },
+  { Comp: project8,  data: project8 },
+  { Comp: project4,  data: project4 },
+  { Comp: project10,  data: project10 },
+  { Comp: project11,  data: project11 },
+  { Comp: project12,  data: project12 },
+  { Comp: project13,  data: project13 },
+  { Comp: project14,  data: project14 },
+  { Comp: project15,  data: project15 }
 ];
 ---
 

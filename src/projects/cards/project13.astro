@@ -1,0 +1,26 @@
+---
+import ProjectCard from "../../components/ProjectCarouselCard.astro";
+import type { Project } from "../../projects/projectData.ts";
+
+export const project: Project = {
+  id: "project5",
+  title: "UNANNOUNCED 2.5D PLATFORMER (NDA)",
+  short: "Comparable to Ori and the Blind Forest, Hollow Knight, GRIS; complete vertical slice Demo delivered",
+  image: "/assets/projects/project13.jpg",
+  tags: ["Porting", "Console"],
+  releaseDate: "Demo - September, 2025",
+  details: [
+    "Designed & built a polished vertical slice for a stylized 2.5D platformer",
+    "Responsive character movement, ability unlocks for traversal, light combat & progression",
+    "Branching level design with environmental puzzles, gated zones, and collectibles",
+    "In-house visuals/audio/VFX to production quality to establish tone and feedback"
+  ],
+  basics: ["Engine: Unreal Engine 5", 
+  "Platforms: PC, PlayStation, Xbox",
+  "Team/Tools/Status: GD, LD, 2D/3D Env Art, 2D Animation, Gameplay Prog, VFX, UI/UX, Sound, Producer; Status — Vertical slice shipped"
+],
+  client: ["Undisclosed (NDA)"]
+};
+---
+
+<ProjectCard {...project} />

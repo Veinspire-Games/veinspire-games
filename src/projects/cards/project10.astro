@@ -1,0 +1,26 @@
+---
+import ProjectCard from "../../components/ProjectCarouselCard.astro";
+import type { Project } from "../../projects/projectData.ts";
+
+export const project: Project = {
+  id: "project11",
+  title: "UNANNOUNCED ACTION PROJECT (NDA)",
+  short: "Comparable to Sifu, Absolver; full-cycle dev from vertical slice, now in production",
+  image: "/assets/projects/project10.jpg",
+  tags: ["Porting", "Console"],
+  releaseDate: "To Be Announced",
+  details: [
+    "Full-cycle development: vertical slice delivered → production underway",
+    "Combat & progression systems: light/heavy, dodge, stamina/combos, AI states, skill tree",
+    "Level design & presentation: multi-level pacing, cinematic camera, complete UI/HUD & UX",
+    "Content & delivery: 3D art/animation, audio with VO/localization hooks, QA and performance passes"
+  ],
+  basics: ["Engine: Unreal Engine 5", 
+  "Platforms: PC",
+  "Team/Tools/Status: Internal cross-functional Veinspire team; Status — production in progress"
+],
+  client: ["Undisclosed (NDA)"]
+};
+---
+
+<ProjectCard {...project} />

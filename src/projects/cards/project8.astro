@@ -1,0 +1,28 @@
+---
+import ProjectCard from "../../components/ProjectCarouselCard.astro";
+import type { Project } from "../../projects/projectData.ts";
+
+export const project: Project = {
+  id: "project8",
+  title: "CRAFTIX",
+  short: "MMORPG-survival for Android; Producer + Game Design + Project Management",
+  image: "/assets/projects/project8.jpg",
+  tags: ["Porting", "Console"],
+  releaseDate: "2021",
+  trailerUrl: "https://play.google.com/store/apps/details?id=com.KG.Craftix&hl=ru",
+  projectWebsiteUrl:"https://craftixgame.com/",
+  details: [
+    "End-to-end production leadership: roadmap, milestones, scope & risk control",
+    "Core gameplay loops and progression design for survival/MMO sessions",
+    "Feature specs and UX flows; tuning of difficulty, pacing, and feedback",
+    "Cross-functional coordination (design/engineering/art/QA) to ship Android build"
+  ],
+  basics: ["Engine: Unity", 
+  "Platforms: Android",
+  "Team/Tools/Status: Cross-functional team under producer leadership; Jira/Confluence/version control; Status — Shipped"
+],
+  client: ["KowiyGames (prior employment of core team member)"]
+};
+---
+
+<ProjectCard {...project} />

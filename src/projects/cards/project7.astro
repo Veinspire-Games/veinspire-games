@@ -1,0 +1,28 @@
+---
+import ProjectCard from "../../components/ProjectCarouselCard.astro";
+import type { Project } from "../../projects/projectData.ts";
+
+export const project: Project = {
+  id: "project7",
+  title: "LIFE IS STRANGE 2",
+  short: "Game Design & Narrative Design on an episodic, choice-driven adventure",
+  image: "/assets/projects/project7.jpg",
+  tags: ["Porting", "Console"],
+  releaseDate: "2018–2019 (episodic)",
+  trailerUrl: "https://store.steampowered.com/app/1659040/HITMAN_World_of_Assassination/",
+  projectWebsiteUrl:"https://ioi.dk/hitman",
+  details: [
+    "Designed core episode beats, branching choices, and consequence mapping",
+    "Authored/dialogue-shaped scenes with pacing, tone, and theme alignment",
+    "Spec’d and iterated interactive systems (exploration, prompts, QTEs) for player agency",
+    "Collaborated with writers/level/UX to ensure cohesion and readable choice UX"
+  ],
+  basics: ["Engine: Unreal Engine 4", 
+  "Platforms: PC, PlayStation 4, Xbox One",
+  "Team/Tools/Status: Role — Game/Narrative Designer; Jira, Confluence, version control; Status — Shipped"
+],
+  client: ["Deck Nine Games (prior employment of core team member)"]
+};
+---
+
+<ProjectCard {...project} />

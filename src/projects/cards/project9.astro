@@ -1,0 +1,28 @@
+---
+import ProjectCard from "../../components/ProjectCarouselCard.astro";
+import type { Project } from "../../projects/projectData.ts";
+
+export const project: Project = {
+  id: "project9",
+  title: "WHERE WINDS MEET",
+  short: "Co-dev support on production builds: features, polish, optimization",
+  image: "/assets/projects/project9.jpg",
+  tags: ["Porting", "Console"],
+  releaseDate: "November 14, 2025",
+  trailerUrl: "https://store.steampowered.com/app/3564740/Where_Winds_Meet/",
+  projectWebsiteUrl:"https://www.wherewindsmeetgame.com/",
+  details: [
+    "Implemented and iterated selected gameplay/system features to milestone quality",
+    "Production polishing: combat/quest/event logic tuning and UX/readability fixes",
+    "Stability & performance passes on live branches; priority bug/crash triage",
+    "Pipeline enablement: profiling, automated smoke checks, CI hand-offs for faster patches"
+  ],
+  basics: ["Engine: Messiah Engine", 
+  "Platforms: PC",
+  "Team/Tools/Status: Embedded Veinspire co-dev unit within lead team; profiling/CI toolchain; Status — In production"
+],
+  client: ["NetEase Games - Everstone Studio"]
+};
+---
+
+<ProjectCard {...project} />

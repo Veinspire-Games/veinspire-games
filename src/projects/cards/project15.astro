@@ -1,0 +1,26 @@
+---
+import ProjectCard from "../../components/ProjectCarouselCard.astro";
+import type { Project } from "../../projects/projectData.ts";
+
+export const project: Project = {
+  id: "project5",
+  title: "UNANNOUNCED MOBILE TACTICAL SHOOTER (NDA)",
+  short: "Comparable to Rainbow Six Mobile, Warface Mobile, Critical Ops; full playable Demo",
+  image: "/assets/projects/project15.jpg",
+  tags: ["Porting", "Console"],
+  releaseDate: "Demo - December, 2025",
+  details: [
+    "Built an operator-based PvP demo with unique abilities, weapons, and roles",
+    "Implemented multiple modes (Team Deathmatch, Bomb Defuse, Capture) with full gameplay logic",
+    "Designed competitive maps: choke points, destructible cover, balanced flow",
+    "Netcode, analytics & QA: real-time sync, crash/telemetry hooks, mobile-optimized UI/controls"
+  ],
+  basics: ["Engine: Unity", 
+  "Platforms: Android, iOS",
+  "Team/Tools/Status: Veinspire demo team (Producer, GD, Gameplay Prog, Network Eng, LD, 3D Artist, UI/UX, Animator, QA); Status — Vertical slice in finalization"
+],
+  client: ["Undisclosed (NDA)"]
+};
+---
+
+<ProjectCard {...project} />

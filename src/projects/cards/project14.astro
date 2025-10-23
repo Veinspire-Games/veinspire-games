@@ -1,0 +1,26 @@
+---
+import ProjectCard from "../../components/ProjectCarouselCard.astro";
+import type { Project } from "../../projects/projectData.ts";
+
+export const project: Project = {
+  id: "project5",
+  title: "UNANNOUNCED IMMERSIVE SIM (NDA)",
+  short: "Comparable to Dishonored 2, Deus Ex: Mankind Divided, Thief; vertical-slice demo",
+  image: "/assets/projects/project14.jpg",
+  tags: ["Porting", "Console"],
+  releaseDate: "Demo - November, 2025",
+  details: [
+    "Designed & built a first-person immersive-sim vertical slice (stealth + systemic sandbox)",
+    "Implemented core stealth loop: light/sound detection, takedowns, patrol/alert AI",
+    "Systemic level design with verticality, multiple infiltration routes, interactive props",
+    "In-house content & polish: stylized NPCs, layered lighting, UI/SFX/VFX for readable feedback"
+  ],
+  basics: ["Engine: Unity", 
+  "Platforms: PC, PlayStation, Xbox",
+  "Team/Tools/Status: GD, LD, Gameplay & AI Prog, Env/Character Art, VFX, UI, Sound, QA, Producer; Status — Vertical slice in finalization"
+],
+  client: ["Undisclosed (NDA)"]
+};
+---
+
+<ProjectCard {...project} />
