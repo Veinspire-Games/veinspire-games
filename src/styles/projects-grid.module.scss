@@ -35,7 +35,18 @@ $paper-50: #121212;
 .meta { display: none; }
 
 /* ==== Overlay ==== */
-.overlay { position: fixed; left:0; right:0; top:0; height:100vh; background:#000; color:#fff; overflow:hidden; opacity:0; visibility:hidden; transition: opacity .28s ease, visibility .28s ease; }
+/* ВАЖНО: даём самому оверлею вертикальный скролл + инерцию iOS.
+   Высоту окончательно задаёт inline-JS через calc(100dvh - header), но базовая высота здесь не мешает. */
+.overlay {
+  position: fixed; left:0; right:0; top:0;
+  height: 100vh; /* базовый фолбек, реальная высота задаётся из JS */
+  background:#000; color:#fff;
+  overflow-y: auto;               /* ключевое для мобильных */
+  -webkit-overflow-scrolling: touch; /* iOS инерция */
+  overscroll-behavior: contain;   /* не пробивать до body */
+  touch-action: pan-y;            /* подсказываем браузеру */
+  opacity:0; visibility:hidden; transition: opacity .28s ease, visibility .28s ease;
+}
 :global(.open).overlay { opacity:1; visibility:visible; }
 
 .bgWrap{ position:absolute; inset:0; overflow:hidden; }
@@ -63,7 +74,7 @@ $paper-50: #121212;
   @media (max-width: 860px){
     width:100%;
     height:100%;
-    overflow:auto; // на мобилке листаем содержимое панели
+    overflow:auto; /* на мобилке листаем содержимое панели */
     -webkit-overflow-scrolling: touch;
     background:
       linear-gradient(180deg,

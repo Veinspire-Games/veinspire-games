@@ -100,7 +100,7 @@ const { items = [], title = "Projects" } = Astro.props;
     var titleEl  = document.getElementById('pgTitle');
     var detailsEl= document.getElementById('pgDetails');
     var basicsEl = document.getElementById('pgBasics');
-    var clientEl  = document.getElementById('pgclient');
+    var clientEl = document.getElementById('pgclient');
     var releaseBlock = document.getElementById('pgReleaseBlock');
     var releaseVal   = document.getElementById('pgReleaseVal');
     var primary  = document.getElementById('pgPrimary');
@@ -116,7 +116,10 @@ const { items = [], title = "Projects" } = Astro.props;
       var st = document.createElement('style');
       st.id = 'pgOverlayStyle';
       st.textContent = `
-        .pg-overlay-force{position:fixed!important;left:0!important;right:0!important;z-index:2147483647!important;width:100vw!important;background:#000;}
+        .pg-overlay-force{
+          position:fixed!important;left:0!important;right:0!important;
+          z-index:2147483647!important;width:100vw!important;background:#000;
+        }
         .pg-header-pin{
           position:fixed!important; top:0; left:0; right:0;
           z-index:2147483648!important;
@@ -163,11 +166,12 @@ const { items = [], title = "Projects" } = Astro.props;
     function fitBelowHeader(){
       if (!root) return;
       var h = measureHeaderHeight();
-      // если закрепили — берём из переменной (точно соответствует высоте)
       var cssH = (header && getComputedStyle(header).getPropertyValue('--pg-header-height')) || '';
       if (cssH) { h = parseInt(cssH, 10) || h; }
+      // 100dvh с фолбэком на 100vh
+      var vh = (window.CSS && CSS.supports && CSS.supports('height: 100dvh')) ? '100dvh' : '100vh';
       root.style.top = h + 'px';
-      root.style.height = 'calc(100vh - ' + h + 'px)';
+      root.style.height = 'calc(' + vh + ' - ' + h + 'px)';
     }
 
     function fillList(ul, arr){
@@ -181,7 +185,7 @@ const { items = [], title = "Projects" } = Astro.props;
       if (!btn || !root || !bgImg || !titleEl) return;
 
       // 1) жёстко фиксируем хедер с его текущей высотой
-      var pinnedH = pinHeader();
+      pinHeader();
 
       // 2) позиционируем оверлей ровно под ним
       fitBelowHeader();
@@ -192,9 +196,9 @@ const { items = [], title = "Projects" } = Astro.props;
       var rel     = (btn.querySelector('[data-release]') || {}).textContent || '';
       var trailer = (btn.querySelector('[data-trailer]') || {}).textContent || '';
       var site    = (btn.querySelector('[data-site]')    || {}).textContent || '';
-      var details = Array.from(btn.querySelectorAll('[data-details] li')).map(li=>li.textContent||'');
-      var basics  = Array.from(btn.querySelectorAll('[data-basics] li')).map(li=>li.textContent||'');
-      var client  = Array.from(btn.querySelectorAll('[data-client] li')).map(li=>li.textContent||'');
+      var details = Array.from(btn.querySelectorAll('[data-details] li')).map(function(li){ return li.textContent||''; });
+      var basics  = Array.from(btn.querySelectorAll('[data-basics] li')).map(function(li){ return li.textContent||''; });
+      var client  = Array.from(btn.querySelectorAll('[data-client] li')).map(function(li){ return li.textContent||''; });
 
       // 4) наполнение
       bgImg.setAttribute('src', image);
@@ -216,13 +220,15 @@ const { items = [], title = "Projects" } = Astro.props;
       root.removeAttribute('hidden');
       root.style.display='block';
       root.setAttribute('aria-hidden','false');
-      requestAnimationFrame(()=>root.classList.add('open'));
+      // сброс прокрутки оверлея на верх
+      root.scrollTop = 0;
+      requestAnimationFrame(function(){ root.classList.add('open'); });
 
       // запрет скролла основного контента
       document.documentElement.style.overflow='hidden';
       document.body.style.overflow='hidden';
 
-      // пересчёты (если, например, responsive-хедер меняет высоту на ресайзе)
+      // пересчёты (если responsive-хедер меняет высоту на ресайзе)
       window.addEventListener('resize', fitBelowHeader, {passive:true});
     }
 
@@ -258,4 +264,3 @@ const { items = [], title = "Projects" } = Astro.props;
   });
 })();
 </script>
-
