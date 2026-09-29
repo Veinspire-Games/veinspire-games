@@ -9,8 +9,8 @@
   --hero-overlay-bottom: rgba(0,0,0,.65);
 
   /* типографика */
-  --h1-min: 38px;
-  --h1-max: 64px;      /* примерно как на рефе (можешь поднять до 72-76) */
+  --h1-min: 32px;
+  --h1-max: 52px;
   --lead: 16px;
 
   /* кнопка learn more */
@@ -26,10 +26,13 @@
   /* полноэкранный блок + «full-bleed» по ширине */
   position: relative;
   min-height: 100vh;
+  min-height: 100svh;
   width: 100vw;                /* растянуть на весь вьюпорт */
   left: 50%;                   /* выровнять относительно контейнера */
   margin-left: -50vw;          /* сделать full-bleed даже если Layout даёт отступы */
   overflow: clip;
+  display: flex;
+  align-items: flex-end;
 
   /* фон */
   background: #000 center / cover no-repeat;
@@ -54,8 +57,8 @@
   position: relative;
   text-align: center;
   color: #fff;
-  padding-top: 88px;   /* небольшой отступ от хедера */
-  padding-bottom: 88px;
+  padding-top: 0;
+  padding-bottom: clamp(56px, 9vh, 88px);
 }
 
 /* заголовок в 3 строки с жирным трекингом */
@@ -64,7 +67,7 @@
   font-weight: 900;
   letter-spacing: .02em;
   line-height: 1.05;
-  font-size: clamp(var(--h1-min), 6vw, var(--h1-max));
+  font-size: clamp(var(--h1-min), 4.6vw, var(--h1-max));
   text-shadow: 0 2px 18px rgba(0,0,0,.35); /* легкое свечение на фоне */
 }
 
