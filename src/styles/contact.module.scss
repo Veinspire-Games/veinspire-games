@@ -74,6 +74,19 @@
 
 .captchaWrap { margin: 12px 0 18px; }
 
+.captchaNote {
+  margin: 8px 0 0;
+  color: var(--vs-ink-700);
+  font-size: 11px;
+  line-height: 1.45;
+
+  a {
+    color: var(--vs-brand-400);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+}
+
 .submit {
   appearance: none;
   display: inline-flex;

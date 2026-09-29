@@ -33,24 +33,37 @@ const FORM_ACTION = "https://formspree.io/f/xldnqarq";
 
       <!-- reCAPTCHA: скрыта до валидности формы -->
       <div id="captchaWrap" class={styles.captchaWrap} hidden>
-        <div id="g-recaptcha" class="g-recaptcha" data-sitekey="6LeKs38rAAAAAOV5MhKAcyoSR8x5Bixd6JfeN53I"></div>
+        <div
+          id="g-recaptcha"
+          class="g-recaptcha"
+          data-sitekey="6LeKs38rAAAAAOV5MhKAcyoSR8x5Bixd6JfeN53I"
+          data-callback="onCaptchaCompleted"
+          data-expired-callback="onCaptchaExpired"
+          data-error-callback="onCaptchaError"
+        ></div>
+        <p class={styles.captchaNote}>
+          This site is protected by reCAPTCHA and the Google
+          <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+          and <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer">Terms of Service</a> apply.
+        </p>
       </div>
 
       <button id="submitBtn" class={styles.submit} type="submit" disabled>Submit</button>
 
       <div class={styles.checks}>
         <label class={styles.checkLine}>
-          <input id="consent1" type="checkbox" class={styles.checkbox} />
+          <input id="consent1" name="privacy_acknowledged" value="yes" type="checkbox" class={styles.checkbox} required />
           <span>
-            By ticking this box, I consent to processing my personal data in accordance with
-            Veinspire’s <a href="/privacy" target="_blank" rel="noopener">Privacy&nbsp;Policy</a>.
+            I have read the <a href="/privacy" target="_blank" rel="noopener">Privacy&nbsp;Notice</a>
+            and understand how my data will be used to respond to this request.
           </span>
         </label>
 
         <label class={styles.checkLine}>
-          <input id="consent2" type="checkbox" class={styles.checkbox} />
+          <input id="consent2" name="marketing_consent" value="yes" type="checkbox" class={styles.checkbox} />
           <span>
-            I consent to receiving marketing communications from Veinspire Games. I can unsubscribe at any moment.
+            Optional: I agree to receive occasional marketing communications from Veinspire Games.
+            I can withdraw this consent at any time.
           </span>
         </label>
       </div>
@@ -90,12 +103,24 @@ const FORM_ACTION = "https://formspree.io/f/xldnqarq";
       emailValid(emailEl.value) &&
       messageEl.value.trim().length > 3;
 
-    const consentsOk = () => !!(consent1 && consent1.checked && consent2 && consent2.checked);
+    const privacyAcknowledged = () => !!(consent1 && consent1.checked);
+
+    const captchaValid = () => {
+      const captcha = window.grecaptcha;
+      return !!(captcha && typeof captcha.getResponse === "function" && captcha.getResponse().length);
+    };
 
     const updateUI = () => {
-      const ok = fieldsValid() && consentsOk();
-      submitBtn.disabled = !ok;
-      captchaWrap.hidden = !ok;
+      const readyForCaptcha = fieldsValid() && privacyAcknowledged();
+      captchaWrap.hidden = !readyForCaptcha;
+      submitBtn.disabled = !readyForCaptcha || !captchaValid();
+    };
+
+    window.onCaptchaCompleted = updateUI;
+    window.onCaptchaExpired = updateUI;
+    window.onCaptchaError = () => {
+      statusEl.textContent = "The spam check could not load. Please refresh the page or email us directly.";
+      updateUI();
     };
 
     const markInvalids = () => {
@@ -116,7 +141,9 @@ const FORM_ACTION = "https://formspree.io/f/xldnqarq";
       if (submitBtn.disabled) {
         e.preventDefault();
         markInvalids();
-        statusEl.textContent = "Please fill all fields correctly and tick both checkboxes.";
+        statusEl.textContent = fieldsValid() && privacyAcknowledged()
+          ? "Please complete the spam check."
+          : "Please fill all fields correctly and acknowledge the Privacy Notice.";
         form.scrollIntoView({ behavior: "smooth", block: "center" });
         return;
       }
@@ -127,7 +154,6 @@ const FORM_ACTION = "https://formspree.io/f/xldnqarq";
         "Company: " + companyEl.value.trim() + "\n" +
         "Email: " + emailEl.value.trim() + "\n" +
         "Message: " + messageEl.value.trim();
-      messageEl.value = merged;
 
       e.preventDefault();
       statusEl.textContent = "";
@@ -135,10 +161,15 @@ const FORM_ACTION = "https://formspree.io/f/xldnqarq";
 
       try {
         const data = new FormData(form);
+        data.set("message", merged);
         const res = await fetch(form.action, { method: "POST", body: data, headers: { Accept: "application/json" } });
 
         if (res.ok) {
           form.reset();
+          const captcha = window.grecaptcha;
+          if (captcha && typeof captcha.reset === "function") {
+            captcha.reset();
+          }
           updateUI();
           statusEl.textContent = "Thanks for your submission!";
         } else {
