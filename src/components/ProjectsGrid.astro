@@ -17,6 +17,7 @@ const { items = [], title = "Projects" } = Astro.props;
           class={s.tile}
           type="button"
           data-idx={i}
+          data-id={data.id}
           aria-label={`Open ${data.title}`}
           onclick="window.__pgOpenFrom(this)"
         >
