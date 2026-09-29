@@ -6,52 +6,30 @@ type Item  = { title: string; desc: string; points: Point[] };
 
 const items: Item[] = [
   {
-    title: "Game Development",
-    desc: "We deliver end-to-end production for high-quality titles on any platform, partnering with leading publishers and studios to ship their vision.",
-    points: ["Full Game Development", "Co-Development", "Analytics & LiveOps"],
+    title: "Gameplay features and systems",
+    desc: "Implementation and integration of defined Unreal Engine 5 gameplay scopes within an existing production.",
+    points: ["Gameplay feature implementation", "AI and interaction systems", "Technical design and Blueprint support", "Integration and build acceptance"],
   },
   {
-    title: "Technology",
-    desc: "Backed by deep engineering expertise, we design and build game architectures that run flawlessly on every platform.",
-    points: ["Tech Co-dev", "Optimization", "Gameplay Programming", "Multiplayer Programming", "Tools Development", "UI/UX Development", "Porting", "Remastering", "Devops", "Store submission"],
+    title: "World and quest content",
+    desc: "A focused delivery pod for locations, quests, interactions, and client-framework integration.",
+    points: ["Level design and world-content integration", "Quest logic, triggers, and state handling", "Navigation, entrances, and interactive elements", "Content validation and review support"],
   },
   {
-    title: "Game Design",
-    desc: "We craft systems, levels, economy, and narrative—from vision and core loop through prototyping, playtests, and monetization balancing.",
-    points: ["Vision, pillars, GDD & Feature Vision", "Core loop & progression design", "Systems/economy/monetization", "Combat/AI & encounter design", "Level design, blockouts, greyboxing", "Narrative & quest design (Articy/Twine)", "Telemetry, balancing & A/B tests", "Prototyping & playtests"],
+    title: "Optimization and technical support",
+    desc: "Targeted investigation and implementation work around performance, stability, and production bottlenecks.",
+    points: ["Profiling and bottleneck analysis", "Runtime and memory optimization", "Build stability and priority defect support", "Debug and validation workflows"],
   },
   {
-    title: "Art",
-    desc: "Our artists power world-class franchises across the full visual range—from bold stylization to photo-real fidelity.",
-    points: [
-      "End-to-end Art production",
-      { title: "Solutions:", items: [
-        "IP development", "Art Direction", "Characters", "Environment & Level Art",
-        "Vehicles", "Weapons", "UI/UX Design", "Animation & VFX"
-      ]},
-    ],
+    title: "Technical production",
+    desc: "Hands-on production support for a feature backlog, vertical slice, or milestone that needs clearer ownership.",
+    points: ["Scope and acceptance criteria", "Dependency and delivery planning", "Risk and milestone control", "Client communication and handoff"],
   },
   {
-    title: "Trailers & Cinematics",
-    desc: "We produce top-tier gameplay and CG trailers, in-game cinematics, and UA/marketing videos using both UE5 real-time and pre-rendered pipelines.",
-    points: ["Pre-Production Trailers", "Cinematic Production","Gameplay Trailers", "In-game Cutscenes"],
+    title: "Internal R&D",
+    desc: "Studio-owned prototypes and validation concepts developed separately from client delivery unless a contract states otherwise.",
+    points: ["UE5 editor-tool concepts", "World and quest validation", "Narrative-system prototyping", "Reusable production workflows"],
   },
-  {
-    title: "VO & Localization",
-    desc: "End-to-end voice-over and localization—from casting and script adaptation to recording, editing, engine integration, and LQA across dozens of languages.",
-    points: ["Casting & VO direction", "Script adaptation & localization", "VO recording", "Data editing and cleanup", "Lip-sync & timing", "Engine integration", "Subtitles & closed captions", "Localization QA"],
-  },
-  {
-    title: "Audio",
-    desc: "End-to-end audio production: original music, sound design, implementation, and technical audio optimized for all platforms.",
-    points: ["Music composition & adaptive scoring", "Sound design (SFX, UI, ambience, foley)", "Dialogue editing & mastering", "In-engine implementation"],
-  },
-  {
-    title: "QA & Testing",
-    desc: "Our QA team runs rigorous, structured testing so defects don`t slip through, using automation to keep delivery on time, on budget, and at quality.",
-    points: ["Manual QA", "QA Automation", "Technical QA", "Functional QA", "UX QA"],
-  },
-
 ];
 
 const tighten = (s: string) =>
