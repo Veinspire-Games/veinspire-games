@@ -70,6 +70,27 @@ const FORM_ACTION = "https://formspree.io/f/xldnqarq";
 
       <div id="form-status" class={styles.status} role="status" aria-live="polite"></div>
     </form>
+
+    <div
+      id="form-success"
+      class={styles.successPanel}
+      role="status"
+      aria-live="polite"
+      tabindex="-1"
+      hidden
+    >
+      <div class={styles.successIcon} aria-hidden="true">
+        <svg viewBox="0 0 24 24" role="img">
+          <path d="m5 12.5 4.25 4.25L19 7" />
+        </svg>
+      </div>
+      <p class={styles.successEyebrow}>Submission complete</p>
+      <h2 class={styles.successTitle}>Message sent</h2>
+      <p class={styles.successText}>
+        Thanks for reaching out. Your message is safely on its way, and we’ll get back to you as soon as possible.
+      </p>
+      <button id="sendAnotherBtn" class={styles.secondaryButton} type="button">Send another message</button>
+    </div>
   </div>
 </section>
 
@@ -82,6 +103,8 @@ const FORM_ACTION = "https://formspree.io/f/xldnqarq";
   const form = $("contact-form");
   const submitBtn = $("submitBtn");
   const statusEl = $("form-status");
+  const successEl = $("form-success");
+  const sendAnotherBtn = $("sendAnotherBtn");
   const captchaWrap = $("captchaWrap");
 
   const nameEl = $("name");
@@ -92,7 +115,7 @@ const FORM_ACTION = "https://formspree.io/f/xldnqarq";
   const consent1 = $("consent1");
   const consent2 = $("consent2");
 
-  if (!form || !submitBtn || !statusEl || !captchaWrap || !nameEl || !companyEl || !emailEl || !messageEl) {
+  if (!form || !submitBtn || !statusEl || !successEl || !sendAnotherBtn || !captchaWrap || !nameEl || !companyEl || !emailEl || !messageEl) {
     console.warn("[Contacts] Missing DOM elements. Script skipped.");
   } else {
     const emailValid = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test((v || "").trim());
@@ -135,6 +158,13 @@ const FORM_ACTION = "https://formspree.io/f/xldnqarq";
 
     [nameEl, companyEl, emailEl, messageEl].forEach((el) => el.addEventListener("input", updateUI));
     [consent1, consent2].forEach((c) => c && c.addEventListener("change", updateUI));
+    sendAnotherBtn.addEventListener("click", () => {
+      successEl.hidden = true;
+      form.hidden = false;
+      statusEl.textContent = "";
+      updateUI();
+      nameEl.focus();
+    });
     updateUI();
 
     form.addEventListener("submit", async (e) => {
@@ -156,8 +186,10 @@ const FORM_ACTION = "https://formspree.io/f/xldnqarq";
         "Message: " + messageEl.value.trim();
 
       e.preventDefault();
-      statusEl.textContent = "";
+      statusEl.textContent = "Sending your message…";
       submitBtn.disabled = true;
+      submitBtn.textContent = "Sending…";
+      form.setAttribute("aria-busy", "true");
 
       try {
         const data = new FormData(form);
@@ -171,7 +203,11 @@ const FORM_ACTION = "https://formspree.io/f/xldnqarq";
             captcha.reset();
           }
           updateUI();
-          statusEl.textContent = "Thanks for your submission!";
+          statusEl.textContent = "";
+          form.hidden = true;
+          successEl.hidden = false;
+          successEl.focus({ preventScroll: true });
+          successEl.scrollIntoView({ behavior: "smooth", block: "center" });
         } else {
           let out = {};
           try { out = await res.json(); } catch {}
@@ -183,6 +219,9 @@ const FORM_ACTION = "https://formspree.io/f/xldnqarq";
       } catch {
         statusEl.textContent = "Oops! There was a problem submitting your form.";
         submitBtn.disabled = false;
+      } finally {
+        submitBtn.textContent = "Submit";
+        form.removeAttribute("aria-busy");
       }
     });
   }

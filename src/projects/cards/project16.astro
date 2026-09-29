@@ -1,0 +1,27 @@
+---
+import ProjectCard from "../../components/ProjectCarouselCard.astro";
+import type { Project } from "../../projects/projectData.ts";
+
+export const project: Project = {
+  id: "internal-quest-validation-toolkit",
+  title: "UE5 QUEST VALIDATION TOOLKIT",
+  short: "Studio R&D for repeatable checks across world and quest content",
+  image: "/assets/projects/quest-validation-tool.webp",
+  tags: ["Internal R&D", "Unreal Engine 5", "Editor Tooling"],
+  releaseDate: "In development",
+  details: [
+    "Scan levels, Data Assets, and Data Tables in a controlled validation pass",
+    "Validate identifiers, triggers, references, and navigation metadata",
+    "Detect broken references and incomplete interaction setup",
+    "Generate a structured report linked to affected assets"
+  ],
+  basics: [
+    "Engine: Unreal Engine 5",
+    "Type: Editor tooling prototype",
+    "Status: Internal R&D; no client deployment or measured efficiency gains claimed"
+  ],
+  client: ["Veinspire Games (internal)"]
+};
+---
+
+<ProjectCard {...project} />
