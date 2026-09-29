@@ -5,7 +5,9 @@ import styles from "../styles/privacy.module.scss";
 const CONTACT_EMAIL = "contact@veinspire-games.com";
 const COMPANY_NAME = "Veinspire Games";
 const LEGAL_NAME = "Individual Entrepreneur Petr Petrov";
+const IDENTIFICATION_NUMBER = "306493149";
 const REGISTRATION_DATE = "7 November 2024";
+const LEGAL_ADDRESS = "Georgia, Tbilisi, Samgori District, Police Dead End N5, Floor 2, N4a";
 const LAST_UPDATED = "29 September 2026";
 ---
 
@@ -28,9 +30,12 @@ const LAST_UPDATED = "29 September 2026";
       <h2>Data controller</h2>
       <p>
         The data controller is {LEGAL_NAME}, an individual entrepreneur registered in Georgia on {REGISTRATION_DATE}
-        and trading as {COMPANY_NAME}. Privacy requests and questions can be sent to
-        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+        under identification number {IDENTIFICATION_NUMBER} and trading as {COMPANY_NAME}.
       </p>
+      <ul>
+        <li>Registered legal address: {LEGAL_ADDRESS}</li>
+        <li>Privacy contact: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></li>
+      </ul>
 
       <h2>Information we collect</h2>
       <p>We may collect the following categories of information:</p>
