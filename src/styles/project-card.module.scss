@@ -15,6 +15,8 @@
 }
 .img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
 .cardCarousel[data-id="internal-narrative-prototype"] .img{ object-position:68% center; }
+.cardCarousel[data-id="internal-quest-validation-toolkit"] .img,
+.cardCarousel[data-id="internal-articy-import-tool"] .img{ object-position:65% center; }
 .overlay{
   position:absolute; inset:0;
   background: linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,.55) 60%, rgba(0,0,0,.65) 100%);

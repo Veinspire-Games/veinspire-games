@@ -1,0 +1,27 @@
+---
+import ProjectCard from "../../components/ProjectCarouselCard.astro";
+import type { Project } from "../../projects/projectData.ts";
+
+export const project: Project = {
+  id: "internal-articy-import-tool",
+  title: "ARTICY-TO-UE5 CONTENT IMPORT TOOL",
+  short: "Studio R&D for structured narrative-data import and validation",
+  image: "/assets/projects/articy-import-tool.webp",
+  tags: ["Internal R&D", "Unreal Engine 5", "Narrative Pipeline"],
+  releaseDate: "In development",
+  details: [
+    "Parse exported narrative data and map supported fields",
+    "Create or update Unreal data structures through a controlled import step",
+    "Flag missing identifiers, broken references, and unsupported content",
+    "Produce a reviewable report for narrative and implementation teams"
+  ],
+  basics: [
+    "Engine: Unreal Engine 5",
+    "Type: Narrative content-pipeline prototype",
+    "Status: Internal R&D; no client use or measured efficiency gains claimed"
+  ],
+  client: ["Veinspire Games (internal)"]
+};
+---
+
+<ProjectCard {...project} />
