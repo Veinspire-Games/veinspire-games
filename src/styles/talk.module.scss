@@ -55,15 +55,14 @@
 .word{ display:inline; }
 .arrow{ display:inline-block; transform: translateY(clamp(2px, .3vw, 4px)); }
 
-/* подпись справа внизу */
+/* подпись отдельной строкой под подчёркиванием */
 .note{
-  position: absolute;
-  right: 0;
-  bottom: clamp(-12px, -1vw, -8px);
-  margin: 0;
+  margin: clamp(22px, 2.2vw, 32px) 0 0;
   color: var(--paper-0);
   font-size: clamp(12px, 1.1vw, 14px);
   letter-spacing: .1em;
+  line-height: 1.4;
+  text-align: right;
   text-transform: uppercase;
   opacity: .9;
 }
@@ -111,7 +110,6 @@
   }
 
   .note{
-    position: static;
     margin-top: clamp(18px, 6vw, 28px);
     text-align: center;       /* подпись тоже по центру */
     opacity: .85;
