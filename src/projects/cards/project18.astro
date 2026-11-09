@@ -1,0 +1,26 @@
+---
+import ProjectCard from "../../components/ProjectCarouselCard.astro";
+import type { Project } from "../projectData";
+
+export const project: Project = {
+  id: "internal-interactive-scene-systems",
+  title: "INTERACTIVE SCENE SYSTEMS",
+  short: "UE5 scene prototyping that connects player interactions, timed input, and scripted sequences.",
+  image: "/assets/projects/interactive-scene-systems.webp",
+  tags: ["Internal R&D", "Unreal Engine 5", "Gameplay Systems"],
+  details: [
+    "Prototype how player interactions trigger scripted scenes.",
+    "Pause a sequence for a quick-time event and handle success and failure separately.",
+    "Explore how scene outcomes can feed into task progression."
+  ],
+  basics: [
+    "Engine: Unreal Engine 5",
+    "Type: Interactive scene prototype",
+    "Tools: Story Framework by V1 Projects / VisualOne",
+    "Status: Internal R&D, in development"
+  ],
+  client: ["Veinspire Games (internal)"]
+};
+---
+
+<ProjectCard {...project} />

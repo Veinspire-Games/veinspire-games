@@ -1,0 +1,26 @@
+---
+import ProjectCard from "../../components/ProjectCarouselCard.astro";
+import type { Project } from "../projectData";
+
+export const project: Project = {
+  id: "internal-directed-npc-behavior",
+  title: "DIRECTED NPC BEHAVIOR",
+  short: "UE5 NPCs that switch from ambient behavior to scripted actions and back.",
+  image: "/assets/projects/directed-npc-behavior.webp",
+  tags: ["Internal R&D", "Unreal Engine 5", "Gameplay AI"],
+  details: [
+    "Use StateTree to manage transitions between ambient behavior and directed control.",
+    "Prototype how NPCs move into position for dialogue or a scripted action.",
+    "Define how NPCs return to ambient activity when the scene ends."
+  ],
+  basics: [
+    "Engine: Unreal Engine 5",
+    "Type: NPC behavior prototype",
+    "Tools: StateTree; gameplay foundation uses Story Framework by V1 Projects / VisualOne",
+    "Status: Internal R&D, in development"
+  ],
+  client: ["Veinspire Games (internal)"]
+};
+---
+
+<ProjectCard {...project} />

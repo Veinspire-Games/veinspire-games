@@ -1,0 +1,26 @@
+---
+import ProjectCard from "../../components/ProjectCarouselCard.astro";
+import type { Project } from "../projectData";
+
+export const project: Project = {
+  id: "internal-wwise-audio-integration",
+  title: "WWISE AUDIO INTEGRATION",
+  short: "Spatial sound and in-game audio controls for a UE5 prototype using Wwise.",
+  image: "/assets/projects/wwise-audio-integration.webp",
+  tags: ["Internal R&D", "Unreal Engine 5", "Technical Audio"],
+  details: [
+    "Configure positional sound and distance attenuation for interactive props, including doors.",
+    "Organize sound effects for props, ambience, and interface feedback in Wwise.",
+    "Prototype an in-game audio menu with separate controls for music, dialogue, effects, ambience, and UI."
+  ],
+  basics: [
+    "Engine: Unreal Engine 5",
+    "Type: Audio integration prototype",
+    "Tools: Audiokinetic Wwise",
+    "Status: Internal R&D, in development"
+  ],
+  client: ["Veinspire Games (internal)"]
+};
+---
+
+<ProjectCard {...project} />

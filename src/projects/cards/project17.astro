@@ -1,24 +1,23 @@
 ---
 import ProjectCard from "../../components/ProjectCarouselCard.astro";
-import type { Project } from "../../projects/projectData.ts";
+import type { Project } from "../projectData";
 
 export const project: Project = {
   id: "internal-articy-import-tool",
-  title: "ARTICY-TO-UE5 CONTENT IMPORT TOOL",
-  short: "Studio R&D for structured narrative-data import and validation",
-  image: "/assets/projects/articy-import-tool.webp",
+  title: "BRANCHING DIALOGUE PIPELINE",
+  short: "From authored dialogue in articy:draft to playable choices in Unreal Engine 5.",
+  image: "/assets/projects/branching-dialogue-pipeline.webp",
   tags: ["Internal R&D", "Unreal Engine 5", "Narrative Pipeline"],
-  releaseDate: "In development",
   details: [
-    "Parse exported narrative data and map supported fields",
-    "Create or update Unreal data structures through a controlled import step",
-    "Flag missing identifiers, broken references, and unsupported content",
-    "Produce a reviewable report for narrative and implementation teams"
+    "Compile exported dialogue into Unreal data tables using Veinspire's project-specific tools.",
+    "Flag missing identifiers and broken references before testing scenes in the editor.",
+    "Test branching conversations with camera changes, subtitles, and player choices in a playable prototype."
   ],
   basics: [
     "Engine: Unreal Engine 5",
-    "Type: Narrative content-pipeline prototype",
-    "Status: Internal R&D; no client use or measured efficiency gains claimed"
+    "Type: Narrative content pipeline",
+    "Tools: articy:draft",
+    "Status: Internal R&D, in development"
   ],
   client: ["Veinspire Games (internal)"]
 };
